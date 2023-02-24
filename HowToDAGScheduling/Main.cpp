@@ -25,6 +25,7 @@ void Main()
 
 	while (System::Update())
 	{
+		dag.update();
 		dag.draw();
 	}
 }
