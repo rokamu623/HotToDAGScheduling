@@ -8,12 +8,18 @@ private:
 	Point _pos;
 	Circle _body;
 	Font _font;
+	Array<std::reference_wrapper<Node>> _pre;
+	Array<Line> _lines;
 public:
 	Node() {};
 	Node(int idx, int wcet, Point pos);
 
+	void append_pre(Node& pre);
+
 	void draw(Point pos);
 
+	int idx();
+	Point pos();
 };
 
 class DAG

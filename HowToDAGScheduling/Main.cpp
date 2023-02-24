@@ -17,8 +17,8 @@ void Main()
 
 	Array<Array<int>> edges =
 	{
-		{0, 1}, {0, 2}, {0, 3},
-		{1, 4}, {1, 4}, {1, 4}
+		Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
+		Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
 	};
 
 	DAG dag = DAG(nodes, edges, Point(64, 64));
