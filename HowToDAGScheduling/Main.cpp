@@ -1,5 +1,6 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.6
 # include "DAG.h"
+# include "SchedGrid.h"
 
 void Main()
 {
@@ -22,10 +23,14 @@ void Main()
 	};
 
 	DAG dag = DAG(nodes, edges, Point(64, 64));
+	SchedGrid grid;
 
 	while (System::Update())
 	{
 		dag.update();
+		if (MouseL.up())
+			dag.fit(grid);
+		grid.draw();
 		dag.draw();
 	}
 }

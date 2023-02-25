@@ -1,12 +1,13 @@
 ﻿#include "stdafx.h"
 #include "DAG.h"
+#include "SchedGrid.h"
 
 Node::Node(int idx, int wcet, Point pos)
 {
 	_idx = idx;
 	_wcet = wcet;
 	_chase = false;
-	_pos = Point(64, 48) * pos;
+	_graph_pos = Point(64, 48) * pos;
 	_graph_body = Circle(16);
 	_font = Font(16);
 	_sched_body = Rect(Random(100), Random(100), 32, 32);
@@ -15,7 +16,12 @@ Node::Node(int idx, int wcet, Point pos)
 void Node::append_pre(Node& pre)
 {
 	_pre.push_back(pre);
-	_lines.push_back(Line(pre.pos() + Point(16, 0), _pos - Point(16, 0)));
+	_lines.push_back(Line(pre.graph_pos() + Point(16, 0), _graph_pos - Point(16, 0)));
+}
+
+void Node::fit(Point pos)
+{
+	_sched_body.setPos(pos);
 }
 
 bool Node::update()
@@ -39,9 +45,9 @@ void Node::draw_graph(Point pos)
 {
 	for (auto& line : _lines)
 		line.movedBy(Point(16, 16) + pos).drawArrow(1.0, Vec2(5, 5), Palette::Black);
-	_graph_body.movedBy(_pos + Point(16, 16) + pos).draw(Palette::Gray);
-	_graph_body.movedBy(_pos + Point(16, 16) + pos).drawFrame(1, Palette::Black);
-	_font(Format(_wcet)).drawAt(_pos + Point(16, 16) + pos);
+	_graph_body.movedBy(_graph_pos + Point(16, 16) + pos).draw(Palette::Gray);
+	_graph_body.movedBy(_graph_pos + Point(16, 16) + pos).drawFrame(1, Palette::Black);
+	_font(Format(_wcet)).drawAt(_graph_pos + Point(16, 16) + pos);
 }
 
 int Node::idx()
@@ -49,9 +55,9 @@ int Node::idx()
 	return _idx;
 }
 
-Point Node::pos()
+Point Node::graph_pos()
 {
-	return _pos;
+	return _graph_pos;
 }
 
 DAG::DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos)
@@ -71,6 +77,33 @@ DAG::DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos)
 		}
 
 	}
+}
+
+void DAG::fit(SchedGrid& grid)
+{
+
+	for (auto& node : _nodes)
+		for (auto& cell : grid.grid())
+			if (node.sched_body().top().begin.intersects(cell))
+			{
+				node.fit(cell.top().begin.asPoint());
+				break;
+			}
+			else if (node.sched_body().bottom().end.intersects(cell))
+			{
+				node.fit(cell.top().begin.asPoint());
+				break;
+			}
+			else if (node.sched_body().bottom().begin.intersects(cell))
+			{
+				node.fit(cell.top().begin.asPoint());
+				break;
+			}
+			else if (node.sched_body().top().end.intersects(cell))
+			{
+				node.fit(cell.top().begin.asPoint());
+				break;
+			}
 }
 
 void DAG::update()
