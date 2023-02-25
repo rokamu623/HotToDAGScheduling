@@ -32,6 +32,10 @@ void Main()
 		dag.update();
 		if (MouseL.up())
 			dag.fit(grid);
+		if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
+		{
+			compiler.compile(dag, grid);
+		}
 		if (MouseR.down())
 		{
 			compiler.compile(dag, grid);

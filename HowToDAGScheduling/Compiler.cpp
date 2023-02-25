@@ -7,9 +7,13 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 	CompileLog grid_log = grid.compile(dag);
 	CompileLog dag_log = dag.compile(grid);
 	if (grid_log._success != true || dag_log._success != true)
-		Print << U"Compile Error";
-	if (grid_log._success != true)
-		Print << grid_log._message;
-	if (dag_log._success != true)
-		Print << dag_log._message;
+	{
+		Print << U"Compile Failer";
+		if (grid_log._success != true)
+			Print << grid_log._message;
+		if (dag_log._success != true)
+			Print << dag_log._message;
+	}
+	else
+		Print << U"Compile Success";
 }
