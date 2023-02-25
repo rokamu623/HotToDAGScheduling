@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "SchedGrid.h"
+class SchedGrid;
 
 class Node
 {
@@ -44,5 +44,7 @@ public:
 
 	void update();
 	void draw();
+
+	Array<Node> nodes() { return _nodes; };
 };
 

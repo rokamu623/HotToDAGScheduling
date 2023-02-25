@@ -30,8 +30,10 @@ void Main()
 		dag.update();
 		if (MouseL.up())
 			dag.fit(grid);
-		grid.draw();
+		if (MouseR.down())
+			grid.compile(dag);
 		dag.draw();
+		grid.draw();
 	}
 }
 
