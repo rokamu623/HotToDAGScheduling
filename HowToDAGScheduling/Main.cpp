@@ -9,11 +9,11 @@ void Main()
 
 	Array<Node> nodes =
 	{
-		Node(0, 10, Point(0, 1)),
-		Node(1, 8, Point(1, 0)),
-		Node(2, 6, Point(1, 1)),
-		Node(3, 7, Point(1, 2)),
-		Node(4, 9, Point(2, 1))
+		Node(0, 2, Point(0, 1)),
+		Node(1, 3, Point(1, 0)),
+		Node(2, 2, Point(1, 1)),
+		Node(3, 4, Point(1, 2)),
+		Node(4, 1, Point(2, 1))
 	};
 
 	Array<Array<int>> edges =

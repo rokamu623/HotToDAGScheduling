@@ -6,6 +6,8 @@ class Node
 private:
 	int _idx;
 	int _wcet;
+	int _time;
+	int _core;
 	Array<std::reference_wrapper<Node>> _pre;
 
 	Point _graph_pos;
@@ -22,11 +24,15 @@ public:
 	void append_pre(Node& pre);
 	void fit(Point pos);
 
+	void assign(int time, int core);
+
 	bool update();
 	void draw_sched();
 	void draw_graph(Point pos);
 
 	int idx();
+	int time() { return _time; };
+	int core() { return _core; };
 	Point graph_pos();
 	Rect sched_body() { return _sched_body; };
 };
@@ -41,6 +47,7 @@ public:
 	DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos);
 
 	void fit(SchedGrid& grid);
+	void compile(SchedGrid& grid);
 
 	void update();
 	void draw();

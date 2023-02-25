@@ -10,7 +10,7 @@ Node::Node(int idx, int wcet, Point pos)
 	_graph_pos = Point(64, 48) * pos;
 	_graph_body = Circle(16);
 	_font = Font(16);
-	_sched_body = Rect(Random(100), Random(100), 32, 32);
+	_sched_body = Rect(Point(Random(100), Random(100)), Point(16 * _wcet, 32));
 }
 
 void Node::append_pre(Node& pre)
@@ -22,6 +22,12 @@ void Node::append_pre(Node& pre)
 void Node::fit(Point pos)
 {
 	_sched_body.setPos(pos);
+}
+
+void Node::assign(int time, int core)
+{
+	_time = time;
+	_core = core;
 }
 
 bool Node::update()
@@ -104,6 +110,14 @@ void DAG::fit(SchedGrid& grid)
 				node.fit(cell.top().begin.asPoint());
 				break;
 			}
+}
+
+void DAG::compile(SchedGrid& grid)
+{
+	//for(auto& node: _nodes)
+	//	for(auto& cell: grid.grid())
+	//		if(node.sched_body().intersects(cell))
+
 }
 
 void DAG::update()
