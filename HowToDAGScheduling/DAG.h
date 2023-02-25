@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "CompileLog.h"
+
 class SchedGrid;
 
 class Node
@@ -12,6 +14,7 @@ private:
 
 	Point _graph_pos;
 	Circle _graph_body;
+	Color _color;
 	Array<Line> _lines;
 	Font _font;
 
@@ -24,7 +27,9 @@ public:
 	void append_pre(Node& pre);
 	void fit(Point pos);
 
-	void compile();
+	void set_color(Color color) { _color = color; };
+
+	CompileLog compile();
 	void assign(int time, int core);
 
 	bool update();
@@ -49,7 +54,7 @@ public:
 	DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos);
 
 	void fit(SchedGrid& grid);
-	void compile(SchedGrid& grid);
+	CompileLog compile(SchedGrid& grid);
 
 	void update();
 	void draw();

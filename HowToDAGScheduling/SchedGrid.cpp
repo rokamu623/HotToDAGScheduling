@@ -38,7 +38,7 @@ SchedGrid::SchedGrid()
 			_cells[i][j] = Cell(Point(j, i));
 }
 
-void SchedGrid::compile(DAG dag)
+CompileLog SchedGrid::compile(DAG dag)
 {
 	for (auto& cell : _cells)
 		cell.assign(false);
@@ -48,10 +48,16 @@ void SchedGrid::compile(DAG dag)
 			if (node.sched_body().intersects(cell.body()))
 				cell.assign(true);
 
-	Print << U"Compile Error";
+	CompileLog log = CompileLog(true, U"");
+
 	for (auto& cell : _cells)
 		if (cell.invalid())
-			Print << U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time";
+		{
+			log._success = false;
+			log._message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
+		}
+
+	return log;
 }
 
 void SchedGrid::draw()

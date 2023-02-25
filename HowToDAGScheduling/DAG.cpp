@@ -24,12 +24,18 @@ void Node::fit(Point pos)
 	_sched_body.setPos(pos);
 }
 
-void Node::compile()
+CompileLog Node::compile()
 {
-	Print << U"Compile Error";
+	CompileLog log = CompileLog(true, U"");
+
 	for (auto& p : _pre)
 		if (p.get().time() + p.get().wcet() > _time)
-			Print << U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx());
+		{
+			log._message.append(U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx()) + U"\n");
+			log._success = false;
+		}
+
+	return log;
 }
 
 void Node::assign(int time, int core)
@@ -51,7 +57,7 @@ bool Node::update()
 
 void Node::draw_sched()
 {
-	_sched_body.draw();
+	_sched_body.draw(_color);
 	_sched_body.drawFrame(1, Palette::Black);
 }
 
@@ -59,7 +65,7 @@ void Node::draw_graph(Point pos)
 {
 	for (auto& line : _lines)
 		line.movedBy(Point(16, 16) + pos).drawArrow(1.0, Vec2(5, 5), Palette::Black);
-	_graph_body.movedBy(_graph_pos + Point(16, 16) + pos).draw(Palette::Gray);
+	_graph_body.movedBy(_graph_pos + Point(16, 16) + pos).draw(_color);
 	_graph_body.movedBy(_graph_pos + Point(16, 16) + pos).drawFrame(1, Palette::Black);
 	_font(Format(_wcet)).drawAt(_graph_pos + Point(16, 16) + pos);
 }
@@ -76,6 +82,9 @@ Point Node::graph_pos()
 
 DAG::DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos)
 {
+	for (int i = 0; i < nodes.size(); i++)
+		nodes[i].set_color(HSV(i * (360 / nodes.size()), 20, 50));
+
 	_nodes = nodes;
 	_pos = pos;
 
@@ -123,19 +132,26 @@ void DAG::fit(SchedGrid& grid)
 		}
 }
 
-void DAG::compile(SchedGrid& grid)
+CompileLog DAG::compile(SchedGrid& grid)
 {
+	CompileLog log = CompileLog(true, U"");
+
 	for (auto& node : _nodes)
 		for (auto& cell : grid.cells())
 			if (node.sched_body().top().begin.intersects(cell.body()))
-			{
-				Print << Format(cell.core());
-				Print << Format(cell.time());
 				node.assign(cell.time(), cell.core());
-			}
 
 	for (auto& node : _nodes)
-		node.compile();
+	{
+		CompileLog node_log = node.compile();
+		if (node_log._success != true)
+		{
+			log._message.append(node_log._message);
+			log._success = false;
+		}
+	}
+
+	return log;
 }
 
 void DAG::update()

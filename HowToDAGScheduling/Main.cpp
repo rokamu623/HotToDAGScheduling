@@ -1,6 +1,7 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.6
 # include "DAG.h"
 # include "SchedGrid.h"
+# include "CompileLog.h"
 
 void Main()
 {
@@ -10,17 +11,16 @@ void Main()
 	Array<Node> nodes =
 	{
 		Node(0, 2, Point(0, 1)),
-		//Node(1, 3, Point(1, 0)),
-		//Node(2, 2, Point(1, 1)),
-		//Node(3, 4, Point(1, 2)),
+		Node(1, 3, Point(1, 0)),
+		Node(2, 2, Point(1, 1)),
+		Node(3, 4, Point(1, 2)),
 		Node(4, 1, Point(2, 1))
 	};
 
 	Array<Array<int>> edges =
 	{
-		//Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
-		//Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
-		Array<int>{0,4}
+		Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
+		Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
 	};
 
 	DAG dag = DAG(nodes, edges, Point(64, 64));
@@ -34,8 +34,14 @@ void Main()
 		if (MouseR.down())
 		{
 			ClearPrint();
-			grid.compile(dag);
-			dag.compile(grid);
+			CompileLog grid_log = grid.compile(dag);
+			CompileLog dag_log = dag.compile(grid);
+			if (grid_log._success != true || dag_log._success != true)
+				Print << U"Compile Error";
+			if (grid_log._success != true)
+				Print << grid_log._message;
+			if (dag_log._success != true)
+				Print << dag_log._message;
 		}
 		dag.draw();
 		grid.draw();

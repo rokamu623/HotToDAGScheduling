@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include "CompileLog.h"
+
 class DAG;
 
 class Cell
@@ -33,7 +35,7 @@ private:
 public:
 	SchedGrid();
 
-	void compile(DAG dag);
+	CompileLog compile(DAG dag);
 
 	void draw();
 
