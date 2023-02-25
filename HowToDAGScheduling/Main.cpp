@@ -2,28 +2,14 @@
 # include "DAG.h"
 # include "SchedGrid.h"
 # include "Compiler.h"
+# include "DAGJsonReader.h"
 
 void Main()
 {
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
 
-	Array<Node> nodes =
-	{
-		Node(0, 2, Point(0, 1)),
-		Node(1, 3, Point(1, 0)),
-		Node(2, 2, Point(1, 1)),
-		Node(3, 4, Point(1, 2)),
-		Node(4, 1, Point(2, 1))
-	};
-
-	Array<Array<int>> edges =
-	{
-		Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
-		Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
-	};
-
-	DAG dag = DAG(nodes, edges, Point(64, 64));
+	DAG dag = DAGJsonReader::generate_dag(U"sample_dag.json");
 	SchedGrid grid;
 	Compiler compiler;
 
