@@ -28,7 +28,7 @@ public:
 class SchedGrid
 {
 private:
-	Grid<Cell> _grid;
+	Grid<Cell> _cells;
 
 public:
 	SchedGrid();
@@ -37,6 +37,6 @@ public:
 
 	void draw();
 
-	Grid<Rect> grid();
+	Grid<Cell> cells();
 };
 

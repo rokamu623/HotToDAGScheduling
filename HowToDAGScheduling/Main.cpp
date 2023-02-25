@@ -10,16 +10,17 @@ void Main()
 	Array<Node> nodes =
 	{
 		Node(0, 2, Point(0, 1)),
-		Node(1, 3, Point(1, 0)),
-		Node(2, 2, Point(1, 1)),
-		Node(3, 4, Point(1, 2)),
+		//Node(1, 3, Point(1, 0)),
+		//Node(2, 2, Point(1, 1)),
+		//Node(3, 4, Point(1, 2)),
 		Node(4, 1, Point(2, 1))
 	};
 
 	Array<Array<int>> edges =
 	{
-		Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
-		Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
+		//Array<int>{0, 1}, Array<int>{0, 2}, Array<int>{0, 3},
+		//Array<int>{1, 4}, Array<int>{2, 4}, Array<int>{3, 4}
+		Array<int>{0,4}
 	};
 
 	DAG dag = DAG(nodes, edges, Point(64, 64));
@@ -31,7 +32,11 @@ void Main()
 		if (MouseL.up())
 			dag.fit(grid);
 		if (MouseR.down())
+		{
+			ClearPrint();
 			grid.compile(dag);
+			dag.compile(grid);
+		}
 		dag.draw();
 		grid.draw();
 	}

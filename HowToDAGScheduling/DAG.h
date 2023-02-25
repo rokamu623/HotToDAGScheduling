@@ -24,6 +24,7 @@ public:
 	void append_pre(Node& pre);
 	void fit(Point pos);
 
+	void compile();
 	void assign(int time, int core);
 
 	bool update();
@@ -31,6 +32,7 @@ public:
 	void draw_graph(Point pos);
 
 	int idx();
+	int wcet() { return _wcet; };
 	int time() { return _time; };
 	int core() { return _core; };
 	Point graph_pos();

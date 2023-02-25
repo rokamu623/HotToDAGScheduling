@@ -24,6 +24,14 @@ void Node::fit(Point pos)
 	_sched_body.setPos(pos);
 }
 
+void Node::compile()
+{
+	Print << U"Compile Error";
+	for (auto& p : _pre)
+		if (p.get().time() + p.get().wcet() > _time)
+			Print << U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx());
+}
+
 void Node::assign(int time, int core)
 {
 	_time = time;
@@ -89,35 +97,45 @@ void DAG::fit(SchedGrid& grid)
 {
 
 	for (auto& node : _nodes)
-		for (auto& cell : grid.grid())
-			if (node.sched_body().top().begin.intersects(cell))
+		for (auto& cell : grid.cells())
+		{
+			Rect body = cell.body();
+			if (node.sched_body().top().begin.intersects(body))
 			{
-				node.fit(cell.top().begin.asPoint());
+				node.fit(body.top().begin.asPoint());
 				break;
 			}
-			else if (node.sched_body().bottom().end.intersects(cell))
+			else if (node.sched_body().bottom().end.intersects(body))
 			{
-				node.fit(cell.top().begin.asPoint());
+				node.fit(body.top().begin.asPoint());
 				break;
 			}
-			else if (node.sched_body().bottom().begin.intersects(cell))
+			else if (node.sched_body().bottom().begin.intersects(body))
 			{
-				node.fit(cell.top().begin.asPoint());
+				node.fit(body.top().begin.asPoint());
 				break;
 			}
-			else if (node.sched_body().top().end.intersects(cell))
+			else if (node.sched_body().top().end.intersects(body))
 			{
-				node.fit(cell.top().begin.asPoint());
+				node.fit(body.top().begin.asPoint());
 				break;
 			}
+		}
 }
 
 void DAG::compile(SchedGrid& grid)
 {
-	//for(auto& node: _nodes)
-	//	for(auto& cell: grid.grid())
-	//		if(node.sched_body().intersects(cell))
+	for (auto& node : _nodes)
+		for (auto& cell : grid.cells())
+			if (node.sched_body().top().begin.intersects(cell.body()))
+			{
+				Print << Format(cell.core());
+				Print << Format(cell.time());
+				node.assign(cell.time(), cell.core());
+			}
 
+	for (auto& node : _nodes)
+		node.compile();
 }
 
 void DAG::update()

@@ -7,6 +7,8 @@ Cell::Cell(Point pos)
 	_core = pos.y;
 	_time = pos.x;
 	_body = Rect(Point(400, 400) + Point(16, 32) * pos, Point(16, 32));
+	_assigned = false;
+	_invalid = false;
 }
 
 bool Cell::invalid()
@@ -30,41 +32,35 @@ void Cell::draw()
 
 SchedGrid::SchedGrid()
 {
-	_grid = Grid<Cell>(10, 2, Cell(Point()));
+	_cells = Grid<Cell>(10, 2, Cell(Point()));
 	for (int i = 0; i < 2; i++)
 		for (int j = 0; j < 10; j++)
-			_grid[i][j] = Cell(Point(j, i));
+			_cells[i][j] = Cell(Point(j, i));
 }
 
 void SchedGrid::compile(DAG dag)
 {
-	for (auto& cell : _grid)
+	for (auto& cell : _cells)
 		cell.assign(false);
 
 	for (auto& node : dag.nodes())
-		for (auto& cell : _grid)
+		for (auto& cell : _cells)
 			if (node.sched_body().intersects(cell.body()))
 				cell.assign(true);
 
-	ClearPrint();
 	Print << U"Compile Error";
-	for (auto& cell : _grid)
+	for (auto& cell : _cells)
 		if (cell.invalid())
 			Print << U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time";
 }
 
 void SchedGrid::draw()
 {
-	for (auto& cell : _grid)
+	for (auto& cell : _cells)
 		cell.draw();
 }
 
-Grid<Rect> SchedGrid::grid()
+Grid<Cell> SchedGrid::cells()
 {
-	Grid<Rect> tmp_grid = Grid<Rect>(10, 2, Rect());
-
-	for (int i = 0; i < 2; i++)
-		for (int j = 0; j < 10; j++)
-			tmp_grid[i][j] = _grid[i][j].body();
-	return tmp_grid;
+	return _cells;
 }
