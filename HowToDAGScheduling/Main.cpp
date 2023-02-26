@@ -1,40 +1,22 @@
 ﻿# include <Siv3D.hpp> // OpenSiv3D v0.6.6
-# include "DAG.h"
-# include "SchedGrid.h"
-# include "Compiler.h"
-# include "DAGJsonReader.h"
+# include "TitleScene.h"
+# include "SelectScene.h"
+# include "MainGameScene.h"
+# include "SceneName.h"
 
 void Main()
 {
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
 
-	DAG dag = DAGJsonReader::generate_dag(U"sample_dag.json");
-	SchedGrid grid;
-	Compiler compiler;
+	App sceneMgr;
+	sceneMgr.add<TitleScene>(SceneName::Title);
+	sceneMgr.add<SelectScene>(SceneName::Select);
+	sceneMgr.add<MainGameScene>(SceneName::Main);
 
 	while (System::Update())
 	{
-		dag.update();
-		if (MouseL.up())
-			dag.fit(grid);
-
-		dag.draw_field();
-		grid.draw_field();
-		compiler.draw_field();
-
-		dag.draw();
-		grid.draw();
-		compiler.draw();
-
-		if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
-		{
-			compiler.compile(dag, grid);
-		}
-		if (MouseR.down())
-		{
-			compiler.compile(dag, grid);
-		}
+		sceneMgr.update();
 	}
 }
 

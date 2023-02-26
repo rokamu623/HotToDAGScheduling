@@ -55,13 +55,13 @@ bool Node::update()
 	return _chase;
 }
 
-void Node::draw_sched()
+void Node::draw_sched() const
 {
 	_sched_body.draw(_color);
 	_sched_body.drawFrame(1, Palette::Black);
 }
 
-void Node::draw_graph(Point pos)
+void Node::draw_graph(Point pos) const
 {
 	for (auto& line : _lines)
 		line.movedBy(Point(16, 16) + pos).drawArrow(1.0, Vec2(5, 5), Palette::Black);
@@ -167,7 +167,7 @@ void DAG::update()
 			break;
 }
 
-void DAG::draw()
+void DAG::draw() const
 {
 	for (auto& node : _nodes)
 	{
@@ -176,7 +176,7 @@ void DAG::draw()
 	}
 }
 
-void DAG::draw_field()
+void DAG::draw_field() const
 {
 
 	_graph_field.draw(LAYOUT::FIELD_COLOR);

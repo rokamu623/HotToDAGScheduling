@@ -21,7 +21,7 @@ public:
 	bool invalid();
 	void assign(bool input);
 
-	void draw();
+	void draw() const;
 
 	int core() { return _core; };
 	int time() { return _time; };
@@ -40,8 +40,8 @@ public:
 
 	CompileLog compile(DAG dag);
 
-	void draw();
-	void draw_field() { _field.draw(LAYOUT::FIELD_COLOR); };
+	void draw() const;
+	void draw_field() const { _field.draw(LAYOUT::FIELD_COLOR); };
 
 	Grid<Cell> cells();
 };

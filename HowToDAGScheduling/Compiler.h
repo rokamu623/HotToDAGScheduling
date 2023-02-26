@@ -14,7 +14,7 @@ public:
 
 	void compile(DAG& dag, SchedGrid& grid);
 
-	void draw_field() { _console_field.draw(LAYOUT::FIELD_COLOR); };
-	void draw();
+	void draw_field() const { _console_field.draw(LAYOUT::FIELD_COLOR); };
+	void draw() const;
 };
 

@@ -23,7 +23,7 @@ void Cell::assign(bool input)
 	_assigned = input;
 }
 
-void Cell::draw()
+void Cell::draw() const
 {
 	if(_invalid)
 		_body.draw(Palette::Red);
@@ -63,7 +63,7 @@ CompileLog SchedGrid::compile(DAG dag)
 	return log;
 }
 
-void SchedGrid::draw()
+void SchedGrid::draw() const
 {
 	for (auto& cell : _cells)
 		cell.draw();

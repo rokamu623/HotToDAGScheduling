@@ -9,8 +9,11 @@ Compiler::Compiler()
 
 void Compiler::compile(DAG& dag, SchedGrid& grid)
 {
+	_message.clear();
+
 	CompileLog grid_log = grid.compile(dag);
 	CompileLog dag_log = dag.compile(grid);
+
 	if (grid_log._success != true || dag_log._success != true)
 	{
 		_message.append(U"Compile Failer\n");
@@ -23,7 +26,7 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 		_message.append(U"Compile Success");
 }
 
-void Compiler::draw()
+void Compiler::draw() const
 {
 	_font(_message).draw(_console_field);
 }

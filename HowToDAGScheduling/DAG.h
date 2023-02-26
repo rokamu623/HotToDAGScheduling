@@ -35,8 +35,8 @@ public:
 	void assign(int time, int core);
 
 	bool update();
-	void draw_sched();
-	void draw_graph(Point pos);
+	void draw_sched() const;
+	void draw_graph(Point pos) const;
 
 	int idx();
 	int wcet() { return _wcet; };
@@ -61,9 +61,9 @@ public:
 	CompileLog compile(SchedGrid& grid);
 
 	void update();
-	void draw();
+	void draw() const;
 
-	void draw_field();
+	void draw_field() const;
 
 	Array<Node> nodes() { return _nodes; };
 };
