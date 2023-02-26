@@ -4,7 +4,7 @@
 
 MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 {
-	dag = DAGJsonReader::generate_dag(U"sample_dag.json");
+	dag = DAGJsonReader::generate_dag(getData().path.value_or(U"sample_dag.json"));
 	_compile_flag = false;
 	//Scene::SetBackground(Palette::Orange);
 }

@@ -5,4 +5,9 @@ enum class SceneName
 	Title, Select, Main
 };
 
-using App = SceneManager<SceneName>;
+struct GameData
+{
+	Optional<FilePath> path = none;
+};
+
+using App = SceneManager<SceneName, GameData>;
