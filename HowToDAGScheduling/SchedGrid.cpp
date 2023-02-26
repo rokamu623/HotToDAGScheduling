@@ -2,11 +2,11 @@
 #include "SchedGrid.h"
 #include "DAG.h"
 
-Cell::Cell(Point pos)
+Cell::Cell(Point pos, Point offset)
 {
 	_core = pos.y;
 	_time = pos.x;
-	_body = Rect(Point(400, 400) + Point(16, 32) * pos, Point(16, 32));
+	_body = Rect(Point(16, 32) * pos + offset, Point(16, 32));
 	_assigned = false;
 	_invalid = false;
 }
@@ -32,10 +32,13 @@ void Cell::draw()
 
 SchedGrid::SchedGrid()
 {
-	_cells = Grid<Cell>(10, 2, Cell(Point()));
+	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1), LAYOUT::SCHED_SPACE_SIZE);
+	_grid_pos = _field.top().begin.asPoint().movedBy((LAYOUT::SCHED_SPACE_SIZE * Vec2(0, 0.5)).asPoint() + LAYOUT::MERGIN * Point(1, 0));
+
+	_cells = Grid<Cell>(10, 2, Cell());
 	for (int i = 0; i < 2; i++)
 		for (int j = 0; j < 10; j++)
-			_cells[i][j] = Cell(Point(j, i));
+			_cells[i][j] = Cell(Point(j, i), _grid_pos);
 }
 
 CompileLog SchedGrid::compile(DAG dag)

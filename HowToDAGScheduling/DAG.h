@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CompileLog.h"
+#include "Layout.h"
 
 class SchedGrid;
 
@@ -28,6 +29,7 @@ public:
 	void fit(Point pos);
 
 	void set_color(Color color) { _color = color; };
+	void set_sched_pos(Point pos) { _sched_body.setPos(pos); };
 
 	CompileLog compile();
 	void assign(int time, int core);
@@ -49,15 +51,19 @@ class DAG
 private:
 	Array<Node> _nodes;
 	Point _pos;
+	Rect _graph_field;
+	Rect _sched_field;
 public:
 	DAG() {};
-	DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos);
+	DAG(Array<Node> nodes, Array<Array<int>> edges);
 
 	void fit(SchedGrid& grid);
 	CompileLog compile(SchedGrid& grid);
 
 	void update();
 	void draw();
+
+	void draw_field();
 
 	Array<Node> nodes() { return _nodes; };
 };

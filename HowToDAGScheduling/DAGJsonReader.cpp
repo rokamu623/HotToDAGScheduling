@@ -12,5 +12,5 @@ DAG DAGJsonReader::generate_dag(FilePath path)
 	Array<Array<int>> edges;
 	for (const auto& edge : json[U"edges"].arrayView())
 		edges.push_back({ edge[U"src"].get<int>(), edge[U"dst"].get<int>() });
-    return DAG(nodes, edges, Point(64, 64));
+    return DAG(nodes, edges);
 }

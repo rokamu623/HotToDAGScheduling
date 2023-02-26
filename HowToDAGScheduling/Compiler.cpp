@@ -1,6 +1,11 @@
 ﻿#include "stdafx.h"
 #include "Compiler.h"
 
+Compiler::Compiler()
+{
+	_console_field = Rect(LAYOUT::MERGIN * Point(2, 1) + LAYOUT::DAG_SPACE_SIZE * Point(1, 0), LAYOUT::CONSOLE_SPACE_SIZE);
+}
+
 void Compiler::compile(DAG& dag, SchedGrid& grid)
 {
 	ClearPrint();
@@ -16,4 +21,8 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 	}
 	else
 		Print << U"Compile Success";
+}
+
+void Compiler::draw()
+{
 }

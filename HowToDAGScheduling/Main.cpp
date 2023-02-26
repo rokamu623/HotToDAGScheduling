@@ -18,6 +18,15 @@ void Main()
 		dag.update();
 		if (MouseL.up())
 			dag.fit(grid);
+
+		dag.draw_field();
+		grid.draw_field();
+		compiler.draw_field();
+
+		dag.draw();
+		grid.draw();
+		compiler.draw();
+
 		if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 		{
 			compiler.compile(dag, grid);
@@ -26,8 +35,6 @@ void Main()
 		{
 			compiler.compile(dag, grid);
 		}
-		dag.draw();
-		grid.draw();
 	}
 }
 

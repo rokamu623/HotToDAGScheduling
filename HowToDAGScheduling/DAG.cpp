@@ -80,13 +80,19 @@ Point Node::graph_pos()
 	return _graph_pos;
 }
 
-DAG::DAG(Array<Node> nodes, Array<Array<int>> edges, Point pos)
+DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
 {
-	for (int i = 0; i < nodes.size(); i++)
-		nodes[i].set_color(HSV(i * (360 / nodes.size()), 20, 50));
-
 	_nodes = nodes;
-	_pos = pos;
+	_pos = LAYOUT::MERGIN;
+
+	_graph_field = Rect(_pos, LAYOUT::DAG_SPACE_SIZE);
+	_sched_field = Rect(LAYOUT::MERGIN * 2 + Point(LAYOUT::SCHED_SPACE_SIZE.x, LAYOUT::DAG_SPACE_SIZE.y), LAYOUT::SPACE_SPACE_SIZE);
+
+	for (int i = 0; i < _nodes.size(); i++)
+	{
+		_nodes[i].set_color(HSV(i * (360 / _nodes.size()), 20, 50));
+		_nodes[i].set_sched_pos(RandomPoint(Rect(_sched_field.top().begin.asPoint() + Point(_sched_field.size) / 4, Point(_sched_field.size) / 2)));
+	}
 
 	for (auto& edge : edges)
 	{
@@ -165,7 +171,14 @@ void DAG::draw()
 {
 	for (auto& node : _nodes)
 	{
-		node.draw_graph(_pos);
+		node.draw_graph(_pos + LAYOUT::MERGIN);
 		node.draw_sched();
 	}
+}
+
+void DAG::draw_field()
+{
+
+	_graph_field.draw(LAYOUT::FIELD_COLOR);
+	_sched_field.draw(LAYOUT::FIELD_COLOR);
 }

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CompileLog.h"
+#include "Layout.h"
 
 class DAG;
 
@@ -15,7 +16,7 @@ private:
 
 public:
 	Cell() {};
-	Cell(Point pos);
+	Cell(Point pos, Point offset);
 
 	bool invalid();
 	void assign(bool input);
@@ -31,6 +32,8 @@ class SchedGrid
 {
 private:
 	Grid<Cell> _cells;
+	Rect _field;
+	Point _grid_pos;
 
 public:
 	SchedGrid();
@@ -38,6 +41,7 @@ public:
 	CompileLog compile(DAG dag);
 
 	void draw();
+	void draw_field() { _field.draw(LAYOUT::FIELD_COLOR); };
 
 	Grid<Cell> cells();
 };
