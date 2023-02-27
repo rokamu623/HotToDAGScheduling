@@ -5,6 +5,7 @@
 #include "Compiler.h"
 #include "DAGJsonReader.h"
 #include "SceneName.h"
+#include "BGMManager.h"
 
 class MainGameScene : public App::Scene
 {

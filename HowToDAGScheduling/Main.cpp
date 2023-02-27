@@ -11,7 +11,7 @@ void Main()
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
 
-	BGMManager bgm;
+	BGMManager::load();
 	SEManager::load();
 
 	App sceneMgr;
@@ -21,7 +21,6 @@ void Main()
 
 	while (System::Update())
 	{
-		bgm.update();
 		sceneMgr.update();
 	}
 }

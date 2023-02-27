@@ -1,12 +1,13 @@
 ﻿#include "stdafx.h"
 #include "BGMManager.h"
 
-BGMManager::BGMManager()
+size_t BGMManager::_button_index = 0;
+HashTable<BGM_name, Audio> BGMManager::_audios = {};
+
+void BGMManager::load()
 {
-	_audios.push_back(Audio());
-	_audios.push_back(Audio(U"BGM/PerituneMaterial_Conjurer_loop.mp3"));
-	_audios.push_back(Audio(U"BGM/Make-it.mp3"));
-	_button_index = 0;
+	_audios[BGM_name::JAZZ] = Audio(U"BGM/PerituneMaterial_Conjurer_loop.mp3");
+	_audios[BGM_name::KAWAII] = Audio(U"BGM/Make-it.mp3");
 }
 
 void BGMManager::update()
@@ -14,11 +15,19 @@ void BGMManager::update()
 	if (SimpleGUI::HorizontalRadioButtons(_button_index, { U"STOP", U"JAZZ", U"KAWAII" }, Point(0, 0)))
 	{
 		for (auto& audio : _audios)
-			audio.stop(1s);
-		if (_button_index < _audios.size() && _audios[_button_index].isEmpty() != true)
+			audio.second.stop(1s);
+		if (_button_index == 1)
 		{
-			_audios[_button_index].play(1s);
-			_audios[_button_index].setVolume(0.1);
+			_audios[BGM_name::JAZZ].play(1s);
+			_audios[BGM_name::JAZZ].setVolume(0.1);
+		}
+		else
+		{
+			if (_button_index == 2)
+			{
+				_audios[BGM_name::KAWAII].play(1s);
+				_audios[BGM_name::KAWAII].setVolume(0.1);
+			}
 		}
 	}
 }

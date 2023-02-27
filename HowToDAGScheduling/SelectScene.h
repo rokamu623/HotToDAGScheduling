@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
 #include "SceneName.h"
+#include "BGMManager.h"
 
 class Stage
 {

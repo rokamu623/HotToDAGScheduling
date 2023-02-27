@@ -24,6 +24,8 @@ void SelectScene::update()
 
 void SelectScene::draw() const
 {
+	BGMManager::update();
+
 	for (auto& stage : _stages)
 		stage.draw();
 }

@@ -28,6 +28,8 @@ void MainGameScene::update()
 
 void MainGameScene::draw() const
 {
+	BGMManager::update();
+
 	dag.draw_field();
 	grid.draw_field();
 	compiler.draw_field();
