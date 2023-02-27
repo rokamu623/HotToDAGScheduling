@@ -7,8 +7,8 @@ Point BGMManager::_pos = Point(0, 0);
 
 void BGMManager::load()
 {
-	_audios[BGM_name::JAZZ] = Audio(U"BGM/PerituneMaterial_Conjurer_loop.mp3");
-	_audios[BGM_name::KAWAII] = Audio(U"BGM/Make-it.mp3");
+	_audios[BGM_name::JAZZ] = Audio(Resource(U"BGM/PerituneMaterial_Conjurer_loop.mp3"));
+	_audios[BGM_name::KAWAII] = Audio(Resource(U"BGM/Make-it.mp3"));
 
 	_pos = Point(Scene::Size().x - BGMManager::UI_SIZE().w, 0);
 }

@@ -7,6 +7,8 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 	dag = DAGJsonReader::generate_dag(getData().path.value_or(U"sample_dag.json"));
 	_compile_flag = false;
 	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"sample_dag.json")));
+
+	_home_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"🏠", _home_button_pos).w * 1.5), 0);
 }
 
 void MainGameScene::update()
@@ -18,6 +20,12 @@ void MainGameScene::update()
 	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 	{
 		compiler.compile(dag, grid);
+	}
+
+	if (SimpleGUI::Button(U"🏠", _home_button_pos))
+	{
+		changeScene(SceneName::Select);
+		SEManager::play(SE_name::Select);
 	}
 
 	if (MouseR.down())
@@ -37,6 +45,7 @@ void MainGameScene::draw() const
 	compiler.draw_field();
 
 	SimpleGUI::Button(U"COMPILE", Vec2(600, 300));
+	SimpleGUI::Button(U"🏠", _home_button_pos);
 
 	dag.draw();
 	grid.draw();

@@ -7,11 +7,11 @@ Point SEManager::_pos = Point(0, 0);
 
 void SEManager::load()
 {
-	_audios[SE_name::Fit] = Audio(U"SE/機械スイッチ.mp3");
-	_audios[SE_name::Failer] = Audio(U"SE/ビープ音4.mp3");
-	_audios[SE_name::Success] = Audio(U"SE/ニュースタイトル表示2.mp3");
-	_audios[SE_name::Select] = Audio(U"SE/ニュースタイトル表示3.mp3");
-	_audios[SE_name::Cursor] = Audio(U"SE/カーソル移動5.mp3");
+	_audios[SE_name::Fit] = Audio(Resource(U"SE/fit.mp3"));
+	_audios[SE_name::Failer] = Audio(Resource(U"SE/failer.mp3"));
+	_audios[SE_name::Success] = Audio(Resource(U"SE/success.mp3"));
+	_audios[SE_name::Select] = Audio(Resource(U"SE/select.mp3"));
+	_audios[SE_name::Cursor] = Audio(Resource(U"SE/cursor.mp3"));
 
 	_pos = Point(Scene::Size().x - BGMManager::UI_SIZE().w - int(SEManager::UI_SIZE().w * 1.5), 0);
 }

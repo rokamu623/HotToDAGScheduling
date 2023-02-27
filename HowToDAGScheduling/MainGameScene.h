@@ -19,6 +19,8 @@ private:
 
 	DrawableText _stage_title;
 
+	Point _home_button_pos;
+
 public:
 	MainGameScene(const InitData& init);
 

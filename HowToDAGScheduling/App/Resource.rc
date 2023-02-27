@@ -118,7 +118,14 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //	Siv3D App Resources (Your application resources here)
 //
 //////////////////////////////////////////////////////
+Resource(BGM/PerituneMaterial_Conjurer_loop.mp3)
+Resource(BGM/Make-it.mp3)
 
+Resource(SE/fit.mp3)
+Resource(SE/failer.mp3)
+Resource(SE/success.mp3)
+Resource(SE/select.mp3)
+Resource(SE/cursor.mp3)
 
 
 /* examples 
