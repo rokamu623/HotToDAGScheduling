@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CompileLog.h"
 #include "Layout.h"
+#include "SEManager.h"
 
 class SchedGrid;
 

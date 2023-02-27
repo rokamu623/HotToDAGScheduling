@@ -2,6 +2,7 @@
 #include "DAG.h"
 #include "SchedGrid.h"
 #include "CompileLog.h"
+#include "SEManager.h"
 
 class Compiler
 {

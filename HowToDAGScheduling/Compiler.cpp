@@ -21,9 +21,14 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 			_message.append(grid_log._message);
 		if (dag_log._success != true)
 			_message.append(dag_log._message);
+
+		SEManager::play(SE_name::Failer);
 	}
 	else
+	{
 		_message.append(U"Compile Success");
+		SEManager::play(SE_name::Success);
+	}
 }
 
 void Compiler::draw() const

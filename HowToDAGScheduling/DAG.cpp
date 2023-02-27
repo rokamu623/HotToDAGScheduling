@@ -22,6 +22,7 @@ void Node::append_pre(Node& pre)
 void Node::fit(Point pos)
 {
 	_sched_body.setPos(pos);
+	SEManager::play(SE_name::Fit);
 }
 
 CompileLog Node::compile()

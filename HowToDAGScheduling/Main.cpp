@@ -4,6 +4,7 @@
 # include "MainGameScene.h"
 # include "SceneName.h"
 # include "BGMManager.h"
+# include "SEManager.h"
 
 void Main()
 {
@@ -11,6 +12,7 @@ void Main()
 	Scene::SetBackground(Palette::Lightgreen);
 
 	BGMManager bgm;
+	SEManager::load();
 
 	App sceneMgr;
 	sceneMgr.add<TitleScene>(SceneName::Title);
