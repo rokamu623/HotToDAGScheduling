@@ -3,11 +3,14 @@
 # include "SelectScene.h"
 # include "MainGameScene.h"
 # include "SceneName.h"
+# include "BGMManager.h"
 
 void Main()
 {
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
+
+	BGMManager bgm;
 
 	App sceneMgr;
 	sceneMgr.add<TitleScene>(SceneName::Title);
@@ -16,6 +19,7 @@ void Main()
 
 	while (System::Update())
 	{
+		bgm.update();
 		sceneMgr.update();
 	}
 }

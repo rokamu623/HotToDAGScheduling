@@ -9,7 +9,7 @@ TitleScene::TitleScene(const InitData& init) :IScene{ init }
 
 void TitleScene::update()
 {
-	if (Scene::Rect().leftClicked())
+	if (Scene::Rect().leftClicked() && BGMManager::UI_SIZE().leftClicked() != true)
 		changeScene(SceneName::Select);
 }
 
