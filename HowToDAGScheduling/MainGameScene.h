@@ -6,6 +6,7 @@
 #include "DAGJsonReader.h"
 #include "SceneName.h"
 #include "BGMManager.h"
+#include "SEManager.h"
 
 class MainGameScene : public App::Scene
 {
@@ -15,6 +16,8 @@ private:
 	Compiler compiler;
 
 	bool _compile_flag;
+
+	DrawableText _stage_title;
 
 public:
 	MainGameScene(const InitData& init);

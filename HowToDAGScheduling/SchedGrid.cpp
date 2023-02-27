@@ -32,7 +32,7 @@ void Cell::draw() const
 
 SchedGrid::SchedGrid()
 {
-	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1), LAYOUT::SCHED_SPACE_SIZE);
+	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::SCHED_SPACE_SIZE);
 	_grid_pos = _field.top().begin.asPoint().movedBy((LAYOUT::SCHED_SPACE_SIZE * Vec2(0, 0.5)).asPoint() + LAYOUT::MERGIN * Point(1, 0));
 
 	_cells = Grid<Cell>(10, 2, Cell());

@@ -15,15 +15,20 @@ SelectScene::SelectScene(const InitData& init) :IScene{ init }
 void SelectScene::update()
 {
 	for (auto& stage : _stages)
-		if (stage.clicked())
+	{
+		stage.update();
+		if (stage.body().leftClicked())
 		{
 			getData().path = stage.path();
 			changeScene(SceneName::Main);
+			SEManager::play(SE_name::Select);
 		}
+	}
 }
 
 void SelectScene::draw() const
 {
+	SEManager::update();
 	BGMManager::update();
 
 	for (auto& stage : _stages)
@@ -35,13 +40,28 @@ Stage::Stage(FilePath path, Point pos)
 	_path = path;
 	_pos = pos;
 	_body = Rect(pos, Point(600, 32)).asQuad();
-	_name = FileSystem::BaseName(path);
+	_name = DAGJsonReader::get_stage_name(path);
 	_font = Font(16);
+	_over = false;
 }
 
-bool Stage::clicked()
+Quad Stage::body()
 {
-	return _body.leftClicked();
+	return _body;
+}
+
+void Stage::update()
+{
+	if (_body.mouseOver())
+	{
+		if (_over == false)
+		{
+			_over = true;
+			SEManager::play(SE_name::Cursor);
+		}
+	}
+	else
+		_over = false;
 }
 
 void Stage::draw() const

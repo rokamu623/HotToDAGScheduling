@@ -84,10 +84,10 @@ Point Node::graph_pos()
 DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
 {
 	_nodes = nodes;
-	_pos = LAYOUT::MERGIN;
+	_pos = LAYOUT::MERGIN + Point(0, LAYOUT::STAZE_SPACE_HEIGHT);
 
 	_graph_field = Rect(_pos, LAYOUT::DAG_SPACE_SIZE);
-	_sched_field = Rect(LAYOUT::MERGIN * 2 + Point(LAYOUT::SCHED_SPACE_SIZE.x, LAYOUT::DAG_SPACE_SIZE.y), LAYOUT::SPACE_SPACE_SIZE);
+	_sched_field = Rect(LAYOUT::MERGIN * 2 + Point(LAYOUT::SCHED_SPACE_SIZE.x, LAYOUT::DAG_SPACE_SIZE.y) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::SPACE_SPACE_SIZE);
 
 	for (int i = 0; i < _nodes.size(); i++)
 	{

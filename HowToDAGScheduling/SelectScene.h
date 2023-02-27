@@ -2,6 +2,9 @@
 #include <Siv3D.hpp>
 #include "SceneName.h"
 #include "BGMManager.h"
+#include "SEManager.h"
+#include "DAGJsonReader.h"
+#include "SEManager.h"
 
 class Stage
 {
@@ -11,12 +14,14 @@ private:
 	Quad _body;
 	String _name;
 	Font _font;
+	bool _over;
 
 public:
 	Stage() {};
 	Stage(FilePath path, Point pos);
 
-	bool clicked();
+	Quad body();
+	void update();
 	void draw() const;
 
 	FilePath path();

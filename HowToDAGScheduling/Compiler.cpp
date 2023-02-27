@@ -3,7 +3,7 @@
 
 Compiler::Compiler()
 {
-	_console_field = Rect(LAYOUT::MERGIN * Point(2, 1) + LAYOUT::DAG_SPACE_SIZE * Point(1, 0), LAYOUT::CONSOLE_SPACE_SIZE);
+	_console_field = Rect(LAYOUT::MERGIN * Point(2, 1) + LAYOUT::DAG_SPACE_SIZE * Point(1, 0) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::CONSOLE_SPACE_SIZE);
 	_font = Font(16);
 }
 

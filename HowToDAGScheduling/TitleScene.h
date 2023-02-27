@@ -2,6 +2,7 @@
 #include <Siv3D.hpp>
 #include "SceneName.h"
 #include "BGMManager.h"
+#include "SEManager.h"
 
 class TitleScene :public App::Scene
 {

@@ -6,7 +6,7 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 {
 	dag = DAGJsonReader::generate_dag(getData().path.value_or(U"sample_dag.json"));
 	_compile_flag = false;
-	//Scene::SetBackground(Palette::Orange);
+	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"sample_dag.json")));
 }
 
 void MainGameScene::update()
@@ -28,6 +28,8 @@ void MainGameScene::update()
 
 void MainGameScene::draw() const
 {
+	_stage_title.draw(LAYOUT::MERGIN * Point(1, 0), Palette::Black);
+	SEManager::update();
 	BGMManager::update();
 
 	dag.draw_field();

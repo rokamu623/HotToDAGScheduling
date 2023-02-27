@@ -14,3 +14,8 @@ DAG DAGJsonReader::generate_dag(FilePath path)
 		edges.push_back({ edge[U"src"].get<int>(), edge[U"dst"].get<int>() });
     return DAG(nodes, edges);
 }
+
+String DAGJsonReader::get_stage_name(FilePath path)
+{
+	return FileSystem::BaseName(path);
+}

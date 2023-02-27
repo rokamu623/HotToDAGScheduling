@@ -3,16 +3,19 @@
 
 size_t BGMManager::_button_index = 0;
 HashTable<BGM_name, Audio> BGMManager::_audios = {};
+Point BGMManager::_pos = Point(0, 0);
 
 void BGMManager::load()
 {
 	_audios[BGM_name::JAZZ] = Audio(U"BGM/PerituneMaterial_Conjurer_loop.mp3");
 	_audios[BGM_name::KAWAII] = Audio(U"BGM/Make-it.mp3");
+
+	_pos = Point(Scene::Size().x - BGMManager::UI_SIZE().w, 0);
 }
 
 void BGMManager::update()
 {
-	if (SimpleGUI::HorizontalRadioButtons(_button_index, { U"STOP", U"JAZZ", U"KAWAII" }, Point(0, 0)))
+	if (SimpleGUI::HorizontalRadioButtons(_button_index, { U"STOP", U"JAZZ", U"KAWAII" }, _pos))
 	{
 		for (auto& audio : _audios)
 			audio.second.stop(1s);
