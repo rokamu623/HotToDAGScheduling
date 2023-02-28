@@ -1,4 +1,6 @@
 {
+  "core_num": 3,
+  "response_time": 10,
   "nodes": [
     {
       "idx": 0,
