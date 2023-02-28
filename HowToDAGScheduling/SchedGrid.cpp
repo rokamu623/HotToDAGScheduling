@@ -20,6 +20,7 @@ bool Cell::invalid()
 
 void Cell::assign(bool input)
 {
+	_invalid = false;
 	if (_assigned == true && input == true)
 		_invalid = true;
 	_assigned = input;
