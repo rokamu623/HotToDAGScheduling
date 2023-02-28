@@ -7,7 +7,7 @@ SelectScene::SelectScene(const InitData& init) :IScene{ init }
 	for (const auto& path : FileSystem::DirectoryContents(U"./", Recursive::No))
 		if (FileSystem::Extension(path) == U"json")
 		{
-			_stages.push_back(Stage(path, Point(32, 500 - 32 * 2 * i)));
+			_stages.push_back(Stage(path, Point(64, 500 - 32 * 2 * i)));
 			i++;
 		}
 }
@@ -39,7 +39,7 @@ Stage::Stage(FilePath path, Point pos)
 {
 	_path = path;
 	_pos = pos;
-	_body = Rect(pos, Point(600, 32)).asQuad();
+	_body = Quad(pos, pos + Point(-32, 32), pos + Point(600 - 32, 32), pos + Point(600, 0));
 	_name = DAGJsonReader::get_stage_name(path);
 	_font = Font(16);
 	_over = false;
@@ -66,6 +66,7 @@ void Stage::update()
 
 void Stage::draw() const
 {
+	_body.movedBy(4, 4).draw(Palette::Black);
 	if (_body.mouseOver())
 		_body.draw(Palette::Lightpink);
 	else
