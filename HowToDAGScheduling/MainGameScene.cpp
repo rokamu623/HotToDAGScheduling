@@ -16,8 +16,7 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 void MainGameScene::update()
 {
 	_dag.update();
-	if (MouseL.up())
-		_dag.fit(_grid);
+	_dag.fit(_grid);
 
 	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 	{

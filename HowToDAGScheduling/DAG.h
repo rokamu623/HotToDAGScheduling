@@ -27,7 +27,7 @@ public:
 	Node(int idx, int wcet, Point pos);
 
 	void append_pre(Node& pre);
-	void fit(Point pos);
+	void fit(SchedGrid& grid);
 
 	void set_color(Color color) { _color = color; };
 	void set_sched_pos(Point pos) { _sched_body.setPos(pos); };
