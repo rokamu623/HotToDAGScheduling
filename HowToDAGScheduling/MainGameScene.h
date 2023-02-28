@@ -11,9 +11,9 @@
 class MainGameScene : public App::Scene
 {
 private:
-	DAG dag;
-	SchedGrid grid;
-	Compiler compiler;
+	DAG _dag;
+	SchedGrid _grid;
+	Compiler _compiler;
 
 	bool _compile_flag;
 
