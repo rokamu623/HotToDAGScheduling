@@ -15,6 +15,8 @@ private:
 	bool _assigned;
 
 public:
+	static Point CELL_SIZE;
+
 	Cell() {};
 	Cell(Point pos, Point offset);
 
@@ -33,7 +35,12 @@ class SchedGrid
 private:
 	Grid<Cell> _cells;
 	Rect _field;
-	Point _grid_pos;
+	Rect _grid_rect;
+
+	Line _x_axis, _y_axis;
+	Array<Line> _y_sub_axises;
+
+	Font _font;
 
 public:
 	SchedGrid();

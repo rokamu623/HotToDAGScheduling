@@ -10,7 +10,7 @@ Node::Node(int idx, int wcet, Point pos)
 	_graph_pos = Point(64, 48) * pos;
 	_graph_body = Circle(16);
 	_font = Font(16);
-	_sched_body = Rect(Point(Random(100), Random(100)), Point(16 * _wcet, 32));
+	_sched_body = Rect(Point(Random(100), Random(100)), Cell::CELL_SIZE * Point(_wcet, 1));
 }
 
 void Node::append_pre(Node& pre)
