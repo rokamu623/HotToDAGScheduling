@@ -16,13 +16,13 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 
 	if (grid_log._success != true || dag_log._success != true)
 	{
-		_message.append(U"Compile Failer\n");
+		_message.append(U"Compile Failure\n");
 		if (grid_log._success != true)
 			_message.append(grid_log._message);
 		if (dag_log._success != true)
 			_message.append(dag_log._message);
 
-		SEManager::play(SE_name::Failer);
+		SEManager::play(SE_name::Failure);
 	}
 	else
 	{

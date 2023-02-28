@@ -8,7 +8,7 @@ Point SEManager::_pos = Point(0, 0);
 void SEManager::load()
 {
 	_audios[SE_name::Fit] = Audio(Resource(U"SE/fit.mp3"));
-	_audios[SE_name::Failer] = Audio(Resource(U"SE/failer.mp3"));
+	_audios[SE_name::Failure] = Audio(Resource(U"SE/failure.mp3"));
 	_audios[SE_name::Success] = Audio(Resource(U"SE/success.mp3"));
 	_audios[SE_name::Select] = Audio(Resource(U"SE/select.mp3"));
 	_audios[SE_name::Cursor] = Audio(Resource(U"SE/cursor.mp3"));
