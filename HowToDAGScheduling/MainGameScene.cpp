@@ -4,7 +4,9 @@
 
 MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 {
-	dag = DAGJsonReader::generate_dag(getData().path.value_or(U"sample_dag.json"));
+	FilePath path = getData().path.value_or(U"sample_dag.json");
+	_grid = SchedGrid(DAGJsonReader::get_core_num(path), ceil(DAGJsonReader::get_response_time(path) * 1.5));
+	_dag = DAGJsonReader::generate_dag(path);
 	_compile_flag = false;
 	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"sample_dag.json")));
 
@@ -13,13 +15,13 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 
 void MainGameScene::update()
 {
-	dag.update();
+	_dag.update();
 	if (MouseL.up())
-		dag.fit(grid);
+		_dag.fit(_grid);
 
 	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 	{
-		compiler.compile(dag, grid);
+		_compiler.compile(_dag, _grid);
 	}
 
 	if (SimpleGUI::Button(U"🏠", _home_button_pos))
@@ -30,7 +32,7 @@ void MainGameScene::update()
 
 	if (MouseR.down())
 	{
-		compiler.compile(dag, grid);
+		_compiler.compile(_dag, _grid);
 	}
 }
 
@@ -40,14 +42,14 @@ void MainGameScene::draw() const
 	SEManager::update();
 	BGMManager::update();
 
-	dag.draw_field();
-	grid.draw_field();
-	compiler.draw_field();
+	_dag.draw_field();
+	_grid.draw_field();
+	_compiler.draw_field();
 
 	SimpleGUI::Button(U"COMPILE", Vec2(600, 300));
 	SimpleGUI::Button(U"🏠", _home_button_pos);
 
-	dag.draw();
-	grid.draw();
-	compiler.draw();
+	_dag.draw();
+	_grid.draw();
+	_compiler.draw();
 }

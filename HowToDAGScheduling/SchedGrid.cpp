@@ -34,8 +34,11 @@ void Cell::draw() const
 
 SchedGrid::SchedGrid()
 {
-	int core_num = 3;
-	int time_limit = ceil(8 * 1.5);
+}
+
+SchedGrid::SchedGrid(int core_num, int time_limit)
+{
+	_core_num = core_num;
 
 	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::SCHED_SPACE_SIZE);
 	_grid_rect = Rect(_field.top().begin.asPoint() + Point(LAYOUT::MERGIN.x * 2, _field.h / 4), Point(_field.w - LAYOUT::MERGIN.x * 4, _field.h / 2));
@@ -92,7 +95,7 @@ void SchedGrid::draw() const
 	for (auto& cell : _cells)
 		cell.draw();
 
-	for (int i = 0; i < _cells.height(); i++)
+	for (int i = 0; i < _core_num; i++)
 		_font(Format(i)).draw(_grid_rect.bottom().end.asPoint() + Point(-int(LAYOUT::MERGIN.x * 1.5), -Cell::CELL_SIZE.y * (1 + i)), Palette::Black);
 }
 

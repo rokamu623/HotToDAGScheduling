@@ -36,6 +36,7 @@ private:
 	Grid<Cell> _cells;
 	Rect _field;
 	Rect _grid_rect;
+	int _core_num;
 
 	Line _x_axis, _y_axis;
 	Array<Line> _y_sub_axises;
@@ -44,6 +45,7 @@ private:
 
 public:
 	SchedGrid();
+	SchedGrid(int core_num, int time_limit);
 
 	CompileLog compile(DAG dag);
 

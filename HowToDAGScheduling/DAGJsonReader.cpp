@@ -19,3 +19,13 @@ String DAGJsonReader::get_stage_name(FilePath path)
 {
 	return FileSystem::BaseName(path);
 }
+
+int DAGJsonReader::get_core_num(FilePath path)
+{
+	return JSON::Load(path)[U"core_num"].getOr<int>(2);
+}
+
+int DAGJsonReader::get_response_time(FilePath path)
+{
+	return JSON::Load(path)[U"response_time"].getOr<int>(10);
+}
