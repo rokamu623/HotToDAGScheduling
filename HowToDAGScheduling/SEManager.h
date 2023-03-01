@@ -3,7 +3,7 @@
 #include "BGMManager.h"
 
 enum class SE_name {
-	Fit, Failer, Success, Select, Cursor
+	Fit, Failure, Success, Select, Cursor
 };
 
 class SEManager
