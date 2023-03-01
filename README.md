@@ -1,7 +1,7 @@
 # HotToDAGScheduling
 
 ## How to use
-- download `HowToDAGScheduling.exe` and `*.json` in Releases
+- download and unzip `HowToDAGScheduling.zip`
 - run `HowToDAGScheduling.exe`
 
 ## Credit
