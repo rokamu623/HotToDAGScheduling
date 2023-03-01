@@ -44,8 +44,8 @@ SchedGrid::SchedGrid(int core_num, int time_limit)
 	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::SCHED_SPACE_SIZE);
 	_grid_rect = Rect(_field.top().begin.asPoint() + Point(LAYOUT::MERGIN.x * 2, _field.h / 4), Point(_field.w - LAYOUT::MERGIN.x * 4, _field.h / 2));
 
-	int x = (floor(_grid_rect.w / time_limit) > Cell::CELL_SIZE.x) ? floor(_grid_rect.w / time_limit) : Cell::CELL_SIZE.x;
-	int y = (floor(_grid_rect.h / time_limit) > Cell::CELL_SIZE.y) ? floor(_grid_rect.h / time_limit) : Cell::CELL_SIZE.y;
+	int x = (floor(_grid_rect.w / time_limit) < Cell::CELL_SIZE.x) ? floor(_grid_rect.w / time_limit) : Cell::CELL_SIZE.x;
+	int y = (floor(_grid_rect.h / _core_num) < Cell::CELL_SIZE.y) ? floor(_grid_rect.h / _core_num) : Cell::CELL_SIZE.y;
 	Cell::CELL_SIZE = Point(x, y);
 
 	_x_axis = Line(_grid_rect.bottom().end.asPoint() + LAYOUT::MERGIN * Point(-1, 0), _grid_rect.bottom().begin.asPoint());
