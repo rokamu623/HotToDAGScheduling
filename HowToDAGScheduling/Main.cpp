@@ -18,7 +18,7 @@ void Main()
 	sceneMgr.add<TitleScene>(SceneName::Title);
 	sceneMgr.add<SelectScene>(SceneName::Select);
 	sceneMgr.add<MainGameScene>(SceneName::Main);
-	sceneMgr.init(SceneName::Main);
+	//sceneMgr.init(SceneName::Main);
 
 	while (System::Update())
 	{
