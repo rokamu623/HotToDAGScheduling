@@ -10,11 +10,17 @@ class Stage
 {
 private:
 	FilePath _path;
+	String _name;
+	int _core_num;
+
 	Point _pos;
 	Quad _body;
-	String _name;
-	Font _font;
 	bool _over;
+	Font _font;
+	int _scroll;
+
+	Triangle _up_tri;
+	Triangle _down_tri;
 
 public:
 	Stage() {};
@@ -25,6 +31,7 @@ public:
 	void draw() const;
 
 	FilePath path();
+	int core_num(){ return _core_num; };
 };
 
 class SelectScene :public App::Scene

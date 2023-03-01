@@ -20,6 +20,7 @@ void SelectScene::update()
 		if (stage.body().leftClicked())
 		{
 			getData().path = stage.path();
+			getData().core_num = stage.core_num();
 			changeScene(SceneName::Main);
 			SEManager::play(SE_name::Select);
 		}
@@ -43,6 +44,14 @@ Stage::Stage(FilePath path, Point pos)
 	_name = DAGJsonReader::get_stage_name(path);
 	_font = Font(16);
 	_over = false;
+	_core_num = DAGJsonReader::get_core_num(path);
+	_scroll = _core_num;
+
+	Point tri_pos = _font(_name + U"   " + Format(_core_num) + U" core").region(_pos).rightCenter().asPoint();
+	_up_tri = Triangle(Point(0, 0), Point(-8, 8), Point(8, 8));
+	_up_tri.setCentroid(tri_pos + Point(-32, -16 + 4));
+	_down_tri = Triangle(Point(0, 0), Point(-8, -8), Point(8, -8));
+	_down_tri.setCentroid(tri_pos + Point(-32, 16 + 4));
 }
 
 Quad Stage::body()
@@ -54,6 +63,22 @@ void Stage::update()
 {
 	if (_body.mouseOver())
 	{
+		if (Mouse::Wheel() > 0 && _scroll > 1)
+		{
+			_scroll -= 1;
+			_core_num -= 1;
+		}
+		if (Mouse::Wheel() < 0 && _scroll < 10)
+		{
+			_scroll += 1;
+			_core_num += 1;
+		}
+		if (MouseM.down())
+		{
+			_core_num = DAGJsonReader::get_core_num(_path);
+			_scroll = _core_num;
+		}
+
 		if (_over == false)
 		{
 			_over = true;
@@ -72,7 +97,10 @@ void Stage::draw() const
 	else
 		_body.draw();
 
-	_font(_name).draw(_pos, Palette::Black);
+	_font(_name+U"   "+Format(_core_num)+U" core").draw(_pos, Palette::Black);
+
+	_up_tri.drawFrame().draw(Palette::Black);
+	_down_tri.drawFrame().draw(Palette::Black);
 }
 
 FilePath Stage::path()
