@@ -4,7 +4,7 @@
 SelectScene::SelectScene(const InitData& init) :IScene{ init }
 {
 	int i = 0;
-	for (const auto& path : FileSystem::DirectoryContents(U"./", Recursive::No))
+	for (const auto& path : FileSystem::DirectoryContents(U"./DAG/", Recursive::No))
 		if (FileSystem::Extension(path) == U"json")
 		{
 			_stages.push_back(Stage(path, Point(64, 500 - 32 * 2 * i)));

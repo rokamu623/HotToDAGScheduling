@@ -4,11 +4,11 @@
 
 MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 {
-	FilePath path = getData().path.value_or(U"sample_dag.json");
+	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
 	_grid = SchedGrid(DAGJsonReader::get_core_num(path), ceil(DAGJsonReader::get_response_time(path) * 1.5));
 	_dag = DAGJsonReader::generate_dag(path);
 	_compile_flag = false;
-	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"sample_dag.json")));
+	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"DAG/sample_dag.json")));
 
 	_home_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"🏠", _home_button_pos).w * 1.5), 0);
 }
