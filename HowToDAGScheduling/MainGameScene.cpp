@@ -18,6 +18,7 @@ void MainGameScene::update()
 	_dag.update();
 	_dag.fit(_grid);
 
+	_compiler.update();
 	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 	{
 		_compiler.compile(_dag, _grid);
