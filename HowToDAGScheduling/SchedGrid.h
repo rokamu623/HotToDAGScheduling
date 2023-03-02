@@ -53,5 +53,6 @@ public:
 	void draw_field() const { _field.draw(LAYOUT::FIELD_COLOR); };
 
 	Grid<Cell> cells();
+	int core_num() { return _core_num; };
 };
 

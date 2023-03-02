@@ -21,7 +21,7 @@ void MainGameScene::update()
 	_compiler.update();
 	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
 	{
-		_compiler.compile(_dag, _grid);
+		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
 	}
 
 	if (SimpleGUI::Button(U"🏠", _home_button_pos))
@@ -30,10 +30,10 @@ void MainGameScene::update()
 		SEManager::play(SE_name::Select);
 	}
 
-	if (MouseR.down())
-	{
-		_compiler.compile(_dag, _grid);
-	}
+	//if (MouseR.down())
+	//{
+	//	_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
+	//}
 }
 
 void MainGameScene::draw() const

@@ -3,7 +3,7 @@
 #include "DAG.h"
 #include "SchedGrid.h"
 #include "Compiler.h"
-#include "DAGJsonReader.h"
+#include "DAGJsonPackage.h"
 #include "SceneName.h"
 #include "BGMManager.h"
 #include "SEManager.h"

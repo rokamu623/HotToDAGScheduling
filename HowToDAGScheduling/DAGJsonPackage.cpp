@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "DAGJsonReader.h"
+#include "DAGJsonPackage.h"
 
 DAG DAGJsonReader::generate_dag(FilePath path)
 {
@@ -43,4 +43,14 @@ String DAGJsonReader::get_result(FilePath path)
 		text.append(U"core " + stage.key + U" : " + Format(stage.value.get<int>()) + U" processor times\n");
 
 	return text;
+}
+
+void DAGJsonWriter::write_result(FilePath path, int core_num, int response_time)
+{
+	JSON json = JSON::Load(path);
+
+	if (json[U"results"][Format(core_num)].getOr<int>(999) > response_time)
+		json[U"results"][Format(core_num)] = response_time;
+
+	json.save(path);
 }

@@ -3,7 +3,7 @@
 #include "SceneName.h"
 #include "BGMManager.h"
 #include "SEManager.h"
-#include "DAGJsonReader.h"
+#include "DAGJsonPackage.h"
 #include "SEManager.h"
 
 class Stage

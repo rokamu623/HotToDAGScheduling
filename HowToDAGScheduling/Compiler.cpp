@@ -9,7 +9,7 @@ Compiler::Compiler()
 	_effect = none;
 }
 
-void Compiler::compile(DAG& dag, SchedGrid& grid)
+void Compiler::compile(DAG& dag, SchedGrid& grid, FilePath path)
 {
 	_message.clear();
 
@@ -29,7 +29,16 @@ void Compiler::compile(DAG& dag, SchedGrid& grid)
 	}
 	else
 	{
-		_message.append(U"Compile Success");
+		_message.append(U"Compile Success\n");
+
+		int response_time = 0;
+		for (auto& node : dag.nodes())
+			if (response_time < node.time() + node.wcet())
+				response_time = node.time() + node.wcet();
+		_message.append(U"Response Time: " + Format(response_time));
+
+		DAGJsonWriter::write_result(path, grid.core_num(), response_time);
+
 		SEManager::play(SE_name::Success);
 		_effect = SuccessEffect();
 	}

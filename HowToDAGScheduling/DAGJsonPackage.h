@@ -11,3 +11,7 @@ namespace DAGJsonReader
 	String get_result(FilePath path);
 };
 
+namespace DAGJsonWriter
+{
+	void write_result(FilePath path, int core_num, int response_time);
+};

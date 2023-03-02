@@ -4,6 +4,7 @@
 #include "CompileLog.h"
 #include "SEManager.h"
 #include "CompileEffect.h"
+#include "DAGJsonPackage.h"
 
 class Compiler
 {
@@ -16,7 +17,7 @@ private:
 public:
 	Compiler();
 
-	void compile(DAG& dag, SchedGrid& grid);
+	void compile(DAG& dag, SchedGrid& grid, FilePath path);
 
 	void draw_field() const { _console_field.draw(LAYOUT::FIELD_COLOR); };
 	void update();
