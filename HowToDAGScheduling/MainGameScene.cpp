@@ -10,7 +10,7 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 	_compile_flag = false;
 	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"DAG/sample_dag.json")));
 
-	_home_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"🏠", _home_button_pos).w * 1.5), 0);
+	_home_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"🏠", Point()).w * 1.5), 0);
 }
 
 void MainGameScene::update()

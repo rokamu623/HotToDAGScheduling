@@ -10,6 +10,7 @@ SelectScene::SelectScene(const InitData& init) :IScene{ init }
 			_stages.push_back(Stage(path, Point(64, 500 - 32 * 2 * i)));
 			i++;
 		}
+	_result_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"Result", Point()).w * 1.5), 0);
 }
 
 void SelectScene::update()
@@ -25,6 +26,12 @@ void SelectScene::update()
 			SEManager::play(SE_name::Select);
 		}
 	}
+
+	if (SimpleGUI::Button(U"Result", _result_button_pos))
+	{
+		changeScene(SceneName::Result);
+		SEManager::play(SE_name::Select);
+	}
 }
 
 void SelectScene::draw() const
@@ -34,6 +41,8 @@ void SelectScene::draw() const
 
 	for (auto& stage : _stages)
 		stage.draw();
+
+	SimpleGUI::Button(U"Result", _result_button_pos);
 }
 
 Stage::Stage(FilePath path, Point pos)

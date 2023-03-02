@@ -29,3 +29,18 @@ int DAGJsonReader::get_response_time(FilePath path)
 {
 	return JSON::Load(path)[U"response_time"].getOr<int>(10);
 }
+
+String DAGJsonReader::get_result(FilePath path)
+{
+	const JSON json = JSON::Load(path);
+
+	String text;
+	text.append(U"Result:\n");
+	text.append(U"\n");
+	text.append(U"Stage: " + DAGJsonReader::get_stage_name(path) + U"\n");
+
+	for (auto& stage : json[U"results"])
+		text.append(U"core " + stage.key + U" : " + Format(stage.value.get<int>()) + U" processor times\n");
+
+	return text;
+}

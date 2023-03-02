@@ -2,6 +2,7 @@
 # include "TitleScene.h"
 # include "SelectScene.h"
 # include "MainGameScene.h"
+# include "ResultScene.h"
 # include "SceneName.h"
 # include "BGMManager.h"
 # include "SEManager.h"
@@ -18,7 +19,8 @@ void Main()
 	sceneMgr.add<TitleScene>(SceneName::Title);
 	sceneMgr.add<SelectScene>(SceneName::Select);
 	sceneMgr.add<MainGameScene>(SceneName::Main);
-	//sceneMgr.init(SceneName::Main);
+	sceneMgr.add<ResultScene>(SceneName::Result);
+	sceneMgr.init(SceneName::Result);
 
 	while (System::Update())
 	{

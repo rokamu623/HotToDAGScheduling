@@ -38,6 +38,8 @@ class SelectScene :public App::Scene
 {
 private:
 	Array<Stage> _stages;
+
+	Point _result_button_pos;
 public:
 	SelectScene(const InitData& init);
 
