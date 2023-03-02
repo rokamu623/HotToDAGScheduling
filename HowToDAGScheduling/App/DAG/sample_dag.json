@@ -1,6 +1,31 @@
-{
+﻿{
   "core_num": 3,
-  "response_time": 10,
+  "edges": [
+    {
+      "dst": 1,
+      "src": 0
+    },
+    {
+      "dst": 2,
+      "src": 0
+    },
+    {
+      "dst": 3,
+      "src": 0
+    },
+    {
+      "dst": 4,
+      "src": 1
+    },
+    {
+      "dst": 4,
+      "src": 2
+    },
+    {
+      "dst": 4,
+      "src": 3
+    }
+  ],
   "nodes": [
     {
       "idx": 0,
@@ -33,30 +58,8 @@
       "y": 1
     }
   ],
-  "edges": [
-    {
-      "src": 0,
-      "dst": 1
-    },
-    {
-      "src": 0,
-      "dst": 2
-    },
-    {
-      "src": 0,
-      "dst": 3
-    },
-    {
-      "src": 1,
-      "dst": 4
-    },
-    {
-      "src": 2,
-      "dst": 4
-    },
-    {
-      "src": 3,
-      "dst": 4
-    }
-  ]
+  "response_time": 10,
+  "results": {
+    "2": 8
+  }
 }
