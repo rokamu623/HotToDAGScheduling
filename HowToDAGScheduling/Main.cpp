@@ -20,7 +20,7 @@ void Main()
 	sceneMgr.add<SelectScene>(SceneName::Select);
 	sceneMgr.add<MainGameScene>(SceneName::Main);
 	sceneMgr.add<ResultScene>(SceneName::Result);
-	sceneMgr.init(SceneName::Result);
+	//sceneMgr.init(SceneName::Result);
 
 	while (System::Update())
 	{
