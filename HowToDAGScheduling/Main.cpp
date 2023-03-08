@@ -18,7 +18,8 @@ void Main()
 	App sceneMgr;
 	sceneMgr.add<TitleScene>(SceneName::Title);
 	sceneMgr.add<SelectScene>(SceneName::Select);
-	sceneMgr.add<MainGameScene>(SceneName::Main);
+	sceneMgr.add<NormalGameScene>(SceneName::Main);
+	sceneMgr.add<ProcessorGameScene>(SceneName::Processor);
 	sceneMgr.add<ResultScene>(SceneName::Result);
 	//sceneMgr.init(SceneName::Result);
 

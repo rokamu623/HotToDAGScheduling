@@ -22,9 +22,11 @@ private:
 
 	Rect _sched_body;
 	bool _chase;
+
+	bool _visible;
 public:
 	Node() {};
-	Node(int idx, int wcet, Point pos);
+	Node(int idx, int wcet, Point pos, bool real_time_mode);
 
 	void append_pre(Node& pre);
 	void fit(SchedGrid& grid);
@@ -34,6 +36,8 @@ public:
 
 	CompileLog compile();
 	void assign(int time, int core);
+
+	void real_time_ready();
 
 	bool update();
 	void draw_sched() const;
@@ -56,7 +60,7 @@ private:
 	Rect _sched_field;
 public:
 	DAG() {};
-	DAG(Array<Node> nodes, Array<Array<int>> edges);
+	DAG(Array<Node> nodes, Array<Array<int>> edges, bool real_time_mode);
 
 	void fit(SchedGrid& grid);
 	CompileLog compile(SchedGrid& grid);

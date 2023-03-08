@@ -1,18 +1,18 @@
 ﻿#include "stdafx.h"
 #include "DAGJsonPackage.h"
 
-DAG DAGJsonReader::generate_dag(FilePath path)
+DAG DAGJsonReader::generate_dag(FilePath path, bool real_time_mode)
 {
 	JSON json = JSON::Load(path);
 
 	Array<Node> nodes;
 	for (const auto& node : json[U"nodes"].arrayView())
-		nodes.push_back(Node(node[U"idx"].get<int>(), node[U"wcet"].get<int>(), Point(node[U"x"].get<int>(), node[U"y"].get<int>())));
+		nodes.push_back(Node(node[U"idx"].get<int>(), node[U"wcet"].get<int>(), Point(node[U"x"].get<int>(), node[U"y"].get<int>()), real_time_mode));
 
 	Array<Array<int>> edges;
 	for (const auto& edge : json[U"edges"].arrayView())
 		edges.push_back({ edge[U"src"].get<int>(), edge[U"dst"].get<int>() });
-    return DAG(nodes, edges);
+    return DAG(nodes, edges, real_time_mode);
 }
 
 String DAGJsonReader::get_stage_name(FilePath path)

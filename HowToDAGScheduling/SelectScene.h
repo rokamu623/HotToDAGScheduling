@@ -40,6 +40,9 @@ private:
 	Array<Stage> _stages;
 
 	Point _result_button_pos;
+	Point _real_time_pos;
+
+	bool _real_time_mode;
 public:
 	SelectScene(const InitData& init);
 

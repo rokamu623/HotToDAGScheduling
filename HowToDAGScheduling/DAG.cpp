@@ -2,7 +2,7 @@
 #include "DAG.h"
 #include "SchedGrid.h"
 
-Node::Node(int idx, int wcet, Point pos)
+Node::Node(int idx, int wcet, Point pos, bool real_time_mode)
 {
 	_idx = idx;
 	_wcet = wcet;
@@ -11,6 +11,8 @@ Node::Node(int idx, int wcet, Point pos)
 	_graph_body = Circle(16);
 	_font = Font(16);
 	_sched_body = Rect(Point(Random(100), Random(100)), Cell::CELL_SIZE * Point(_wcet, 1));
+	_visible = !real_time_mode;
+	_core = -1;
 }
 
 void Node::append_pre(Node& pre)
@@ -68,6 +70,11 @@ void Node::fit(SchedGrid& grid)
 				fitted = true;
 			}
 		}
+
+	if(fitted == true)
+		for (auto& cell : grid.cells())
+			if (_sched_body.top().begin.intersects(cell.body()))
+				assign(cell.time(), cell.core());
 }
 
 CompileLog Node::compile()
@@ -90,21 +97,40 @@ void Node::assign(int time, int core)
 	_core = core;
 }
 
+void Node::real_time_ready()
+{
+	if (_visible != true)
+	{
+		bool tmp = true;
+		for (auto& p : _pre)
+			if (p.get().core() == -1)
+				tmp = false;
+		if (tmp == true)
+			_visible = true;
+	}
+}
+
 bool Node::update()
 {
-	if (Cursor::Pos().intersects(_sched_body) && MouseL.down())
-		_chase = true;
-	if (_chase == true)
-		_sched_body.moveBy(Cursor::Delta());
-	if (_chase == true && MouseL.pressed() != true)
-		_chase = false;
-	return _chase;
+	if (_visible)
+	{
+		if (Cursor::Pos().intersects(_sched_body) && MouseL.down())
+			_chase = true;
+		if (_chase == true)
+			_sched_body.moveBy(Cursor::Delta());
+		if (_chase == true && MouseL.pressed() != true)
+			_chase = false;
+		return _chase;
+	}
 }
 
 void Node::draw_sched() const
 {
-	_sched_body.draw(_color);
-	_sched_body.drawFrame(1, Palette::Black);
+	if (_visible)
+	{
+		_sched_body.draw(_color);
+		_sched_body.drawFrame(1, Palette::Black);
+	}
 }
 
 void Node::draw_graph(Point pos) const
@@ -126,7 +152,7 @@ Point Node::graph_pos()
 	return _graph_pos;
 }
 
-DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
+DAG::DAG(Array<Node> nodes, Array<Array<int>> edges, bool real_time_mode)
 {
 	_nodes = nodes;
 	_pos = LAYOUT::MERGIN + Point(0, LAYOUT::STAZE_SPACE_HEIGHT);
@@ -152,23 +178,28 @@ DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
 		}
 
 	}
+
+	if(real_time_mode)
+		for (auto& node : _nodes)
+			node.real_time_ready();
 }
 
 void DAG::fit(SchedGrid& grid)
 {
-	for (auto& node : _nodes)
-		if (MouseL.up() && node.sched_body().mouseOver())
-			node.fit(grid);
+	if (MouseL.up())
+	{
+		for (auto& node : _nodes)
+		{
+			if (node.sched_body().mouseOver())
+				node.fit(grid);
+			node.real_time_ready();
+		}
+	}
 }
 
 CompileLog DAG::compile(SchedGrid& grid)
 {
 	CompileLog log = CompileLog(true, U"");
-
-	for (auto& node : _nodes)
-		for (auto& cell : grid.cells())
-			if (node.sched_body().top().begin.intersects(cell.body()))
-				node.assign(cell.time(), cell.core());
 
 	for (auto& node : _nodes)
 	{
