@@ -4,7 +4,7 @@
 
 namespace DAGJsonReader
 {
-	DAG generate_dag(FilePath path);
+	DAG generate_dag(FilePath path, bool real_time_mode);
 	String get_stage_name(FilePath path);
 	int get_core_num(FilePath path);
 	int get_response_time(FilePath path);

@@ -33,7 +33,7 @@ class NormalGameScene : public MainGameScene
 private:
 
 public:
-	NormalGameScene(const InitData& init) :MainGameScene(init) {};
+	NormalGameScene(const InitData& init);
 };
 
 class ProcessorGameScene : public MainGameScene
@@ -41,5 +41,5 @@ class ProcessorGameScene : public MainGameScene
 private:
 
 public:
-	ProcessorGameScene(const InitData& init) :MainGameScene(init) { Print << U"ok"; };
+	ProcessorGameScene(const InitData& init);
 };

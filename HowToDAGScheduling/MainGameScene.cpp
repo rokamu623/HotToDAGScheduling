@@ -6,7 +6,6 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 {
 	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
 	_grid = SchedGrid(getData().core_num, ceil(DAGJsonReader::get_response_time(path) * 1.5));
-	_dag = DAGJsonReader::generate_dag(path);
 	_compile_flag = false;
 	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"DAG/sample_dag.json")));
 
@@ -52,4 +51,16 @@ void MainGameScene::draw() const
 	_dag.draw();
 	_grid.draw();
 	_compiler.draw();
+}
+
+NormalGameScene::NormalGameScene(const InitData& init) :MainGameScene(init)
+{
+	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
+	_dag = DAGJsonReader::generate_dag(path, false);
+}
+
+ProcessorGameScene::ProcessorGameScene(const InitData& init) :MainGameScene(init)
+{
+	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
+	_dag = DAGJsonReader::generate_dag(path, true);
 }
