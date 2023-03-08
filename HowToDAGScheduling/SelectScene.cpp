@@ -10,7 +10,11 @@ SelectScene::SelectScene(const InitData& init) :IScene{ init }
 			_stages.push_back(Stage(path, Point(64, 500 - 32 * 2 * i)));
 			i++;
 		}
+
+	_real_time_mode = false;
+
 	_result_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"Result", Point()).w * 1.5), 0);
+	_real_time_pos = Point(0, 0);
 }
 
 void SelectScene::update()
@@ -22,7 +26,10 @@ void SelectScene::update()
 		{
 			getData().path = stage.path();
 			getData().core_num = stage.core_num();
-			changeScene(SceneName::Main);
+			if (_real_time_mode)
+				changeScene(SceneName::Processor);
+			else
+				changeScene(SceneName::Main);
 			SEManager::play(SE_name::Select);
 		}
 	}
@@ -32,6 +39,9 @@ void SelectScene::update()
 		changeScene(SceneName::Result);
 		SEManager::play(SE_name::Select);
 	}
+
+	if (SimpleGUI::CheckBox(_real_time_mode, U"Real Time", _real_time_pos))
+		SEManager::play(SE_name::Select);
 }
 
 void SelectScene::draw() const
@@ -43,6 +53,9 @@ void SelectScene::draw() const
 		stage.draw();
 
 	SimpleGUI::Button(U"Result", _result_button_pos);
+
+	bool tmp = _real_time_mode;
+	SimpleGUI::CheckBox(tmp, U"Real Time", _real_time_pos);
 }
 
 Stage::Stage(FilePath path, Point pos)

@@ -2,7 +2,7 @@
 
 enum class SceneName
 {
-	Title, Select, Main, Result
+	Title, Select, Main, Processor, Result
 };
 
 struct GameData

@@ -10,7 +10,7 @@
 
 class MainGameScene : public App::Scene
 {
-private:
+protected:
 	DAG _dag;
 	SchedGrid _grid;
 	Compiler _compiler;
@@ -28,3 +28,18 @@ public:
 	void draw() const override;
 };
 
+class NormalGameScene : public MainGameScene
+{
+private:
+
+public:
+	NormalGameScene(const InitData& init) :MainGameScene(init) {};
+};
+
+class ProcessorGameScene : public MainGameScene
+{
+private:
+
+public:
+	ProcessorGameScene(const InitData& init) :MainGameScene(init) { Print << U"ok"; };
+};
