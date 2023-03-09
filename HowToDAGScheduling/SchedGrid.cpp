@@ -84,6 +84,28 @@ CompileLog SchedGrid::compile(DAG dag)
 	return log;
 }
 
+CompileLog SchedGrid::compile(DAGRealTime dag)
+{
+	for (auto& cell : _cells)
+		cell.assign(false);
+
+	for (auto& node : dag.nodes())
+		for (auto& cell : _cells)
+			if (node.sched_body().intersects(cell.body()))
+				cell.assign(true);
+
+	CompileLog log = CompileLog(true, U"");
+
+	for (auto& cell : _cells)
+		if (cell.invalid())
+		{
+			log._success = false;
+			log._message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
+		}
+
+	return log;
+}
+
 void SchedGrid::draw() const
 {
 	//_grid_rect.draw();

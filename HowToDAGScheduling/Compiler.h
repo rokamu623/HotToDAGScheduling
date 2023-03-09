@@ -18,6 +18,7 @@ public:
 	Compiler();
 
 	void compile(DAG& dag, SchedGrid& grid, FilePath path);
+	void compile(DAGRealTime& dag, SchedGrid& grid, FilePath path);
 
 	void draw_field() const { _console_field.draw(LAYOUT::FIELD_COLOR); };
 	void update();
