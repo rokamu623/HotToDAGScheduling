@@ -11,7 +11,6 @@
 class MainGameScene : public App::Scene
 {
 protected:
-	DAG _dag;
 	SchedGrid _grid;
 	Compiler _compiler;
 
@@ -31,15 +30,21 @@ public:
 class NormalGameScene : public MainGameScene
 {
 private:
-
+	DAG _dag;
 public:
 	NormalGameScene(const InitData& init);
+
+	void update() override;
+	void draw() const override;
 };
 
 class ProcessorGameScene : public MainGameScene
 {
 private:
-
+	DAGRealTime _dag;
 public:
 	ProcessorGameScene(const InitData& init);
+
+	void update() override;
+	void draw() const override;
 };

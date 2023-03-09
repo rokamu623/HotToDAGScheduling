@@ -14,14 +14,7 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 
 void MainGameScene::update()
 {
-	_dag.update();
-	_dag.fit(_grid);
-
 	_compiler.update();
-	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
-	{
-		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
-	}
 
 	if (SimpleGUI::Button(U"🏠", _home_button_pos))
 	{
@@ -41,14 +34,12 @@ void MainGameScene::draw() const
 	SEManager::update();
 	BGMManager::update();
 
-	_dag.draw_field();
 	_grid.draw_field();
 	_compiler.draw_field();
 
 	SimpleGUI::Button(U"COMPILE", Vec2(600, 300));
 	SimpleGUI::Button(U"🏠", _home_button_pos);
 
-	_dag.draw();
 	_grid.draw();
 	_compiler.draw();
 }
@@ -56,11 +47,47 @@ void MainGameScene::draw() const
 NormalGameScene::NormalGameScene(const InitData& init) :MainGameScene(init)
 {
 	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
-	_dag = DAGJsonReader::generate_dag(path, false);
+	_dag = DAGJsonReader::generate_dag(path);
+}
+
+void NormalGameScene::update()
+{
+	_dag.fit(_grid);
+	_dag.update();
+	MainGameScene::update();
+	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
+	{
+		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
+	}
+}
+
+void NormalGameScene::draw() const
+{
+	_dag.draw_field();
+	MainGameScene::draw();
+	_dag.draw();
 }
 
 ProcessorGameScene::ProcessorGameScene(const InitData& init) :MainGameScene(init)
 {
 	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
-	_dag = DAGJsonReader::generate_dag(path, true);
+	_dag = DAGJsonReader::generate_dag_realtime(path);
+}
+
+void ProcessorGameScene::update()
+{
+	_dag.fit(_grid);
+	_dag.update();
+	MainGameScene::update();
+	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
+	{
+		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
+	}
+}
+
+void ProcessorGameScene::draw() const
+{
+	_dag.draw_field();
+	MainGameScene::draw();
+	_dag.draw();
 }

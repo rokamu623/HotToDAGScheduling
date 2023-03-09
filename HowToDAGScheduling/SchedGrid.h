@@ -3,6 +3,7 @@
 #include "Layout.h"
 
 class DAG;
+class DAGRealTime;
 
 class Cell
 {
@@ -48,6 +49,7 @@ public:
 	SchedGrid(int core_num, int time_limit);
 
 	CompileLog compile(DAG dag);
+	CompileLog compile(DAGRealTime dag);
 
 	void draw() const;
 	void draw_field() const { _field.draw(LAYOUT::FIELD_COLOR); };
