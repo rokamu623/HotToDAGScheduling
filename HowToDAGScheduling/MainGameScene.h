@@ -19,6 +19,7 @@ protected:
 	DrawableText _stage_title;
 
 	Point _home_button_pos;
+	Point _compile_button_pos;
 
 public:
 	MainGameScene(const InitData& init);
