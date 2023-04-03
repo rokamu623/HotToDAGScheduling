@@ -11,6 +11,7 @@ void Main()
 {
 	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
+	Window::SetTitle(U"How To DAG Scheduling ?");
 
 	BGMManager::load();
 	SEManager::load();
