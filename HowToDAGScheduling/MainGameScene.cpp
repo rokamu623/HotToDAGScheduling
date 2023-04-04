@@ -10,6 +10,8 @@ MainGameScene::MainGameScene(const InitData& init) :IScene{ init }
 	_stage_title = Font(24)(DAGJsonReader::get_stage_name(getData().path.value_or(U"DAG/sample_dag.json")));
 
 	_home_button_pos = Point(SEManager::UI_SIZE().x - int(SimpleGUI::ButtonRegion(U"🏠", Point()).w * 1.5), 0);
+	_compile_button_pos = LAYOUT::MERGIN * 2 + Point(LAYOUT::SCHED_SPACE_SIZE.x, LAYOUT::DAG_SPACE_SIZE.y) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT) +
+		LAYOUT::SPACE_SPACE_SIZE * Point(1, 0) - SimpleGUI::ButtonRegion(U"COMPILE", Point()).size.asPoint() * Point(1, 0);
 }
 
 void MainGameScene::update()
@@ -37,7 +39,7 @@ void MainGameScene::draw() const
 	_grid.draw_field();
 	_compiler.draw_field();
 
-	SimpleGUI::Button(U"COMPILE", Vec2(600, 300));
+	SimpleGUI::Button(U"COMPILE", _compile_button_pos);
 	SimpleGUI::Button(U"🏠", _home_button_pos);
 
 	_grid.draw();
@@ -55,7 +57,7 @@ void NormalGameScene::update()
 	_dag.fit(_grid);
 	_dag.update();
 	MainGameScene::update();
-	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
+	if (SimpleGUI::Button(U"COMPILE", _compile_button_pos))
 	{
 		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
 	}
@@ -79,7 +81,7 @@ void ProcessorGameScene::update()
 	_dag.fit(_grid);
 	_dag.update();
 	MainGameScene::update();
-	if (SimpleGUI::Button(U"COMPILE", Vec2(600, 300)))
+	if (SimpleGUI::Button(U"COMPILE", _compile_button_pos))
 	{
 		_compiler.compile(_dag, _grid, getData().path.value_or(U"DAG/sample_dag.json"));
 	}
