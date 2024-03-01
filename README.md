@@ -37,3 +37,6 @@ https://user-images.githubusercontent.com/48247817/224533852-3484ba3c-b64d-4bb0-
 - Siv3D (https://siv3d.github.io/ja-jp/)
 ### Develop and Design
 - okamu
+
+# For Developer
+cite [here (only japanese)](./README_dev.md)
