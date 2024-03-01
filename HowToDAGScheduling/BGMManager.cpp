@@ -9,6 +9,8 @@ void BGMManager::load()
 {
 	_audios[BGM_name::JAZZ] = Audio(Resource(U"BGM/PerituneMaterial_Conjurer_loop.mp3"));
 	_audios[BGM_name::KAWAII] = Audio(Resource(U"BGM/Make-it.mp3"));
+	for (auto [key, audio] : _audios)
+		audio.setLoop(true);
 
 	_pos = Point(Scene::Size().x - BGMManager::UI_SIZE().w, 0);
 }
@@ -24,13 +26,10 @@ void BGMManager::update()
 			_audios[BGM_name::JAZZ].play(1s);
 			_audios[BGM_name::JAZZ].setVolume(0.1);
 		}
-		else
+		else if (_button_index == 2)
 		{
-			if (_button_index == 2)
-			{
 				_audios[BGM_name::KAWAII].play(1s);
 				_audios[BGM_name::KAWAII].setVolume(0.1);
-			}
 		}
 	}
 }
