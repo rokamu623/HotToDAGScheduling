@@ -3,6 +3,7 @@
 
 DAG DAGJsonReader::generate_dag(FilePath path)
 {
+	// DAG 情報 json ファイルをロード
 	JSON json = JSON::Load(path);
 
 	Array<Node> nodes;
@@ -17,6 +18,7 @@ DAG DAGJsonReader::generate_dag(FilePath path)
 
 DAGRealTime DAGJsonReader::generate_dag_realtime(FilePath path)
 {
+	// DAG 情報 json ファイルをロード
 	JSON json = JSON::Load(path);
 
 	Array<NodeRealTime> nodes;
@@ -31,23 +33,33 @@ DAGRealTime DAGJsonReader::generate_dag_realtime(FilePath path)
 
 String DAGJsonReader::get_stage_name(FilePath path)
 {
+	// ディレクトリ名、拡張子を除いたファイル名を返す
 	return FileSystem::BaseName(path);
 }
 
 int DAGJsonReader::get_core_num(FilePath path)
 {
+	// DAG 情報 json ファイルからコア数を返す
 	return JSON::Load(path)[U"core_num"].getOr<int>(2);
 }
 
 int DAGJsonReader::get_response_time(FilePath path)
 {
+	// DAG 情報 json ファイルから応答時間を返す
 	return JSON::Load(path)[U"response_time"].getOr<int>(10);
 }
 
 String DAGJsonReader::get_result(FilePath path)
 {
+	// DAG 情報 json ファイルをロード
 	const JSON json = JSON::Load(path);
 
+	// リザルト形式の文字列を返す
+	// Result:
+	//
+	// Stage: [ファイル名]
+	// core n: m processor times
+	// core n: m processor times
 	String text;
 	text.append(U"Result:\n");
 	text.append(U"\n");
@@ -61,9 +73,11 @@ String DAGJsonReader::get_result(FilePath path)
 
 void DAGJsonWriter::write_result(FilePath path, int core_num, int response_time)
 {
+	// DAG 情報 json ファイルをロード
 	JSON json = JSON::Load(path);
 
-	if (json[U"results"][Format(core_num)].getOr<int>(999) > response_time)
+	// 応答時間の記録がまだないか最高記録より小さければ記録する
+	if (json[U"results"][Format(core_num)].getOr<int>(INT_MAX) > response_time)
 		json[U"results"][Format(core_num)] = response_time;
 
 	json.save(path);
