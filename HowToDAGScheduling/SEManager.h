@@ -15,11 +15,15 @@ private:
 
 	SEManager() {};
 public:
+	// SEの初期化
 	static void load();
 
+	// 引数に対応したSEを鳴らす
 	static void play(SE_name name);
+	// GUIを表示し、SEのオンオフをコントロールする
 	static void update();
 
+	// GUIのサイズ
 	static Rect UI_SIZE() { return SimpleGUI::CheckBoxRegion(U"SE", _pos).asRect(); };
 };
 
