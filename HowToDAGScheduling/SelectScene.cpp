@@ -1,6 +1,74 @@
 ﻿#include "stdafx.h"
 #include "SelectScene.h"
 
+Stage::Stage(FilePath path, Point pos)
+{
+	_path = path;
+	_pos = pos;
+	_body = Quad(pos, pos + Point(-32, 32), pos + Point(600 - 32, 32), pos + Point(600, 0));
+	// DAGJsonReader:: は、DAG 情報ファイルからデータを取得するパッケージ
+	_name = DAGJsonReader::get_stage_name(path);
+	_font = Font(16);
+	_over = false;
+	_core_num = DAGJsonReader::get_core_num(path);
+	_scroll = _core_num;
+
+	// コア数上下のGUIの定義
+	Point tri_pos = _font(_name + U"   " + Format(_core_num) + U" core").region(_pos).rightCenter().asPoint();
+	_up_tri = Triangle(Point(0, 0), Point(-8, 8), Point(8, 8));
+	_up_tri.setCentroid(tri_pos + Point(-32, -16 + 4));
+	_down_tri = Triangle(Point(0, 0), Point(-8, -8), Point(8, -8));
+	_down_tri.setCentroid(tri_pos + Point(-32, 16 + 4));
+}
+
+Quad Stage::body()
+{
+	return _body;
+}
+
+void Stage::update()
+{
+	// カーソルが重なっているとき
+	if (_body.mouseOver())
+	{
+		// マウス or キーボードでコア数を変更
+		if ((Mouse::Wheel() || KeyDown.down()) > 0 && _core_num > 1)
+			_core_num -= 1;
+		if ((Mouse::Wheel() < 0 || KeyUp.down()) && _core_num < 10)
+			_core_num += 1;
+		if (MouseM.down() || KeyLeft.down() || KeyRight.down())
+			_core_num = DAGJsonReader::get_core_num(_path);
+
+		if (_over == false)
+		{
+			_over = true;
+			SEManager::play(SE_name::Cursor);
+		}
+	}
+	else
+		_over = false;
+}
+
+void Stage::draw() const
+{
+	_body.movedBy(4, 4).draw(Palette::Black);
+	if (_body.mouseOver())
+		_body.draw(Palette::Lightpink);
+	else
+		_body.draw();
+
+	_font(_name + U"   " + Format(_core_num) + U" core").draw(_pos, Palette::Black);
+
+	_up_tri.drawFrame().draw(Palette::Black);
+	_down_tri.drawFrame().draw(Palette::Black);
+}
+
+FilePath Stage::path()
+{
+	return _path;
+}
+
+
 SelectScene::SelectScene(const InitData& init) :IScene{ init }
 {
 	int i = 0;
@@ -61,76 +129,4 @@ void SelectScene::draw() const
 
 	bool tmp = _real_time_mode;
 	SimpleGUI::CheckBox(tmp, U"Real Time", _real_time_pos);
-}
-
-Stage::Stage(FilePath path, Point pos)
-{
-	_path = path;
-	_pos = pos;
-	_body = Quad(pos, pos + Point(-32, 32), pos + Point(600 - 32, 32), pos + Point(600, 0));
-	_name = DAGJsonReader::get_stage_name(path);
-	_font = Font(16);
-	_over = false;
-	_core_num = DAGJsonReader::get_core_num(path);
-	_scroll = _core_num;
-
-	Point tri_pos = _font(_name + U"   " + Format(_core_num) + U" core").region(_pos).rightCenter().asPoint();
-	_up_tri = Triangle(Point(0, 0), Point(-8, 8), Point(8, 8));
-	_up_tri.setCentroid(tri_pos + Point(-32, -16 + 4));
-	_down_tri = Triangle(Point(0, 0), Point(-8, -8), Point(8, -8));
-	_down_tri.setCentroid(tri_pos + Point(-32, 16 + 4));
-}
-
-Quad Stage::body()
-{
-	return _body;
-}
-
-void Stage::update()
-{
-	if (_body.mouseOver())
-	{
-		if (Mouse::Wheel() > 0 && _scroll > 1)
-		{
-			_scroll -= 1;
-			_core_num -= 1;
-		}
-		if (Mouse::Wheel() < 0 && _scroll < 10)
-		{
-			_scroll += 1;
-			_core_num += 1;
-		}
-		if (MouseM.down())
-		{
-			_core_num = DAGJsonReader::get_core_num(_path);
-			_scroll = _core_num;
-		}
-
-		if (_over == false)
-		{
-			_over = true;
-			SEManager::play(SE_name::Cursor);
-		}
-	}
-	else
-		_over = false;
-}
-
-void Stage::draw() const
-{
-	_body.movedBy(4, 4).draw(Palette::Black);
-	if (_body.mouseOver())
-		_body.draw(Palette::Lightpink);
-	else
-		_body.draw();
-
-	_font(_name+U"   "+Format(_core_num)+U" core").draw(_pos, Palette::Black);
-
-	_up_tri.drawFrame().draw(Palette::Black);
-	_down_tri.drawFrame().draw(Palette::Black);
-}
-
-FilePath Stage::path()
-{
-	return _path;
 }

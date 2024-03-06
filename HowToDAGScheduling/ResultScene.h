@@ -6,6 +6,7 @@
 #include "DAGJsonPackage.h"
 #include "Layout.h"
 
+// リザルト表示
 class ResultDisplay
 {
 private:
@@ -21,6 +22,7 @@ public:
 	void draw() const;
 };
 
+// 各ステージのリザルトGUI
 class ResultStage
 {
 private:
