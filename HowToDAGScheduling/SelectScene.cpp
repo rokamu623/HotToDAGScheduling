@@ -32,7 +32,7 @@ void Stage::update()
 	if (_body.mouseOver())
 	{
 		// マウス or キーボードでコア数を変更
-		if ((Mouse::Wheel() || KeyDown.down()) > 0 && _core_num > 1)
+		if ((Mouse::Wheel() > 0 || KeyDown.down()) && _core_num > 1)
 			_core_num -= 1;
 		if ((Mouse::Wheel() < 0 || KeyUp.down()) && _core_num < 10)
 			_core_num += 1;

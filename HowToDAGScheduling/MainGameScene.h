@@ -8,6 +8,7 @@
 #include "BGMManager.h"
 #include "SEManager.h"
 
+// メインゲームの基底クラス
 class MainGameScene : public App::Scene
 {
 protected:
@@ -28,6 +29,7 @@ public:
 	void draw() const override;
 };
 
+// 通常モード（最初から全てのノードのスケジューリング長方形が表示されている）
 class NormalGameScene : public MainGameScene
 {
 private:
@@ -39,6 +41,7 @@ public:
 	void draw() const override;
 };
 
+// 通常モード（最初は入口ノードのスケジューリング長方形が表示されている）
 class RealTimeGameScene : public MainGameScene
 {
 private:
