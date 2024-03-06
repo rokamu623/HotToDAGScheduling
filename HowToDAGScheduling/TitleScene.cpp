@@ -9,7 +9,7 @@ TitleScene::TitleScene(const InitData& init) :IScene{ init }
 
 void TitleScene::update()
 {
-
+	// GUI以外がクリックされたらステージセレクトへ
 	if (Scene::Rect().leftClicked() && BGMManager::UI_SIZE().leftClicked() != true && SEManager::UI_SIZE().leftClicked() != true)
 	{
 		changeScene(SceneName::Select);

@@ -9,23 +9,25 @@
 
 void Main()
 {
-	// 背景の色を設定 | Set background color
 	Scene::SetBackground(Palette::Lightgreen);
 	Window::SetTitle(U"How To DAG Scheduling ?");
 
+	// BGM・SEの初期化（ファイル読み込み）
 	BGMManager::load();
 	SEManager::load();
 
+	// 各種シーンを登録
+	// changeScene(SceneName::Hoge) でそのシーンに遷移
 	App sceneMgr;
 	sceneMgr.add<TitleScene>(SceneName::Title);
 	sceneMgr.add<SelectScene>(SceneName::Select);
 	sceneMgr.add<NormalGameScene>(SceneName::Main);
 	sceneMgr.add<ProcessorGameScene>(SceneName::Processor);
 	sceneMgr.add<ResultScene>(SceneName::Result);
-	//sceneMgr.init(SceneName::Result);
 
 	while (System::Update())
 	{
+		// App::Scene を継承したクラスの .update() と .draw() を毎フレーム実行
 		sceneMgr.update();
 	}
 }
