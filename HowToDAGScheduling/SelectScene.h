@@ -6,6 +6,7 @@
 #include "DAGJsonPackage.h"
 #include "SEManager.h"
 
+// 各ステージの選択肢GUI
 class Stage
 {
 private:
@@ -26,11 +27,14 @@ public:
 	Stage() {};
 	Stage(FilePath path, Point pos);
 
+	// クリック用当たり判定
 	Quad body();
 	void update();
 	void draw() const;
 
+	// 選ばれたステージの情報ファイルを返す
 	FilePath path();
+	// 選択したプロセッサコア数を返す
 	int core_num(){ return _core_num; };
 };
 

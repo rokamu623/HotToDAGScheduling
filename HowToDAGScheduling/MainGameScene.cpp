@@ -70,13 +70,13 @@ void NormalGameScene::draw() const
 	_dag.draw();
 }
 
-ProcessorGameScene::ProcessorGameScene(const InitData& init) :MainGameScene(init)
+RealTimeGameScene::RealTimeGameScene(const InitData& init) :MainGameScene(init)
 {
 	FilePath path = getData().path.value_or(U"DAG/sample_dag.json");
 	_dag = DAGJsonReader::generate_dag_realtime(path);
 }
 
-void ProcessorGameScene::update()
+void RealTimeGameScene::update()
 {
 	_dag.fit(_grid);
 	_dag.update();
@@ -87,7 +87,7 @@ void ProcessorGameScene::update()
 	}
 }
 
-void ProcessorGameScene::draw() const
+void RealTimeGameScene::draw() const
 {
 	_dag.draw_field();
 	MainGameScene::draw();

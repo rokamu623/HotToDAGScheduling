@@ -39,12 +39,12 @@ public:
 	void draw() const override;
 };
 
-class ProcessorGameScene : public MainGameScene
+class RealTimeGameScene : public MainGameScene
 {
 private:
 	DAGRealTime _dag;
 public:
-	ProcessorGameScene(const InitData& init);
+	RealTimeGameScene(const InitData& init);
 
 	void update() override;
 	void draw() const override;

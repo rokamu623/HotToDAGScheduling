@@ -4,6 +4,7 @@
 SelectScene::SelectScene(const InitData& init) :IScene{ init }
 {
 	int i = 0;
+	// DAG下のDAG情報jsonファイルをロードし、各jsonファイルに対し選択肢を作成
 	for (const auto& path : FileSystem::DirectoryContents(U"./DAG/", Recursive::No))
 		if (FileSystem::Extension(path) == U"json")
 		{
@@ -22,24 +23,28 @@ void SelectScene::update()
 	for (auto& stage : _stages)
 	{
 		stage.update();
+		// ステージがクリックされたら
 		if (stage.body().leftClicked())
 		{
+			// DAG情報ファイルのパスとコア数を保存してメインゲームへ
 			getData().path = stage.path();
 			getData().core_num = stage.core_num();
 			if (_real_time_mode)
-				changeScene(SceneName::Processor);
+				changeScene(SceneName::RealTime);
 			else
 				changeScene(SceneName::Main);
 			SEManager::play(SE_name::Select);
 		}
 	}
 
+	// Result ボタンが押されたらリザルトシーンへ
 	if (SimpleGUI::Button(U"Result", _result_button_pos))
 	{
 		changeScene(SceneName::Result);
 		SEManager::play(SE_name::Select);
 	}
 
+	// Real Time ボタンが押されたらリアルタイムモードへ
 	if (SimpleGUI::CheckBox(_real_time_mode, U"Real Time", _real_time_pos))
 		SEManager::play(SE_name::Select);
 }

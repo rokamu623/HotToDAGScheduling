@@ -22,7 +22,7 @@ void Main()
 	sceneMgr.add<TitleScene>(SceneName::Title);
 	sceneMgr.add<SelectScene>(SceneName::Select);
 	sceneMgr.add<NormalGameScene>(SceneName::Main);
-	sceneMgr.add<ProcessorGameScene>(SceneName::Processor);
+	sceneMgr.add<RealTimeGameScene>(SceneName::RealTime);
 	sceneMgr.add<ResultScene>(SceneName::Result);
 
 	while (System::Update())
