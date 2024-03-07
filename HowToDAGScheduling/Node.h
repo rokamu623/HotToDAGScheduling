@@ -38,7 +38,6 @@ public:
 
 	// コンパイル（結果計算）
 	CompileLog compile();
-	virtual void real_time_ready() {};
 
 	virtual bool update();
 	// スケジュール配置用の長方形の描画
@@ -75,7 +74,7 @@ public:
 	NodeRealTime() {};
 	NodeRealTime(int idx, int wcet, Point pos);
 
-	void real_time_ready() override;
+	void real_time_ready();
 
 	bool update() override;
 	void draw_sched() const override;

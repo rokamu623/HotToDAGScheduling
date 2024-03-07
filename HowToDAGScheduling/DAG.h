@@ -26,6 +26,7 @@ public:
 };
 
 
+// 通常モードのDAG
 class DAG : public DAGBase
 {
 private:
@@ -46,6 +47,7 @@ public:
 };
 
 
+// リアルタイムモードのDAG
 class DAGRealTime : public DAGBase
 {
 private:
