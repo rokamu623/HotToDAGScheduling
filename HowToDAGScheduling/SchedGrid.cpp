@@ -6,8 +6,9 @@ Point Cell::CELL_SIZE = Point(16, 32);
 
 Cell::Cell(Point pos, Point offset)
 {
-	_core = pos.y;
+	//x軸要素を時間、y軸要素をコアIDとして保存
 	_time = pos.x;
+	_core = pos.y;
 	_body = Rect(Cell::CELL_SIZE * Point(pos.x, -pos.y-1) + offset, Cell::CELL_SIZE);
 	_assigned = false;
 	_invalid = false;
@@ -21,6 +22,7 @@ bool Cell::invalid()
 void Cell::assign(bool input)
 {
 	_invalid = false;
+	// 配置済みのグリッドに配置したら不正とする
 	if (_assigned == true && input == true)
 		_invalid = true;
 	_assigned = input;
@@ -41,19 +43,26 @@ SchedGrid::SchedGrid(int core_num, int time_limit)
 {
 	_core_num = core_num;
 
+	// 下地
 	_field = Rect(LAYOUT::MERGIN * Point(1, 2) + LAYOUT::DAG_SPACE_SIZE * Point(0, 1) + Point(0, LAYOUT::STAZE_SPACE_HEIGHT), LAYOUT::SCHED_SPACE_SIZE);
+	// グリッドの範囲
 	_grid_rect = Rect(_field.top().begin.asPoint() + Point(LAYOUT::MERGIN.x * 2, _field.h / 4), Point(_field.w - LAYOUT::MERGIN.x * 4, _field.h / 2));
 
-	int x = (floor(_grid_rect.w / time_limit) < Cell::CELL_SIZE.x) ? floor(_grid_rect.w / time_limit) : Cell::CELL_SIZE.x;
-	int y = (floor(_grid_rect.h / _core_num) < Cell::CELL_SIZE.y) ? floor(_grid_rect.h / _core_num) : Cell::CELL_SIZE.y;
+	// Cellのサイズ定義（グリッドを個数で割る）
+	// 大きくとも (16, 32) で収める
+	int x = Min(int(ceil(_grid_rect.w / time_limit)), int(Cell::CELL_SIZE.x));
+	int y = Min(int(ceil(_grid_rect.h / _core_num)), int(Cell::CELL_SIZE.y));
 	Cell::CELL_SIZE = Point(x, y);
 
-	_x_axis = Line(_grid_rect.bottom().end.asPoint() + LAYOUT::MERGIN * Point(-1, 0), _grid_rect.bottom().begin.asPoint());
-	_y_axis = Line(_grid_rect.bottom().end.asPoint() + LAYOUT::MERGIN * Point(0, 1), _grid_rect.top().begin.asPoint());
+	// x、y軸
+	_x_axis = Line(_grid_rect.bottom().end.asPoint() + LAYOUT::MERGIN * Point(-1, 0), _grid_rect.bottom().begin.asPoint() + LAYOUT::MERGIN * Point(1, 0));
+	_y_axis = Line(_grid_rect.bottom().end.asPoint() + LAYOUT::MERGIN * Point(0, 1), _grid_rect.top().begin.asPoint() + LAYOUT::MERGIN * Point(0, -1));
 
+	// x軸サブ（x軸をCellのx大きさごとにコピー）
 	for (int i = 0; i < time_limit; i += 5)
 		_y_sub_axises.push_back(_y_axis.movedBy(Cell::CELL_SIZE * Point(i, 0)));
 
+	// Cell 追加
 	_cells = Grid<Cell>(time_limit, core_num, Cell());
 	for (int i = 0; i < core_num; i++)
 		for (int j = 0; j < time_limit; j++)
@@ -64,16 +73,19 @@ SchedGrid::SchedGrid(int core_num, int time_limit)
 
 CompileLog SchedGrid::compile(DAG dag)
 {
+	// 各Cell の割り当て情報をfalseに
 	for (auto& cell : _cells)
 		cell.assign(false);
 
+	//ノードと触れているCell には割り当て情報をtrue に
 	for (auto& node : dag.nodes())
 		for (auto& cell : _cells)
-			if (node.sched_body().intersects(cell.body()))
+			if (cell.body().center().intersects(node.sched_body()))
 				cell.assign(true);
 
 	CompileLog log = CompileLog(true, U"");
 
+	// 不正な配置をされている（2タスク以上配置されている）ときその旨をエラーログに保存
 	for (auto& cell : _cells)
 		if (cell.invalid())
 		{
@@ -86,9 +98,11 @@ CompileLog SchedGrid::compile(DAG dag)
 
 CompileLog SchedGrid::compile(DAGRealTime dag)
 {
+	// 各Cell の割り当て情報をfalseに
 	for (auto& cell : _cells)
 		cell.assign(false);
 
+	//ノードと触れているCell には割り当て情報をtrue に
 	for (auto& node : dag.nodes())
 		for (auto& cell : _cells)
 			if (node.sched_body().intersects(cell.body()))
@@ -96,6 +110,7 @@ CompileLog SchedGrid::compile(DAGRealTime dag)
 
 	CompileLog log = CompileLog(true, U"");
 
+	// 不正な配置をされている（2タスク以上配置されている）ときその旨をエラーログに保存
 	for (auto& cell : _cells)
 		if (cell.invalid())
 		{
@@ -108,7 +123,6 @@ CompileLog SchedGrid::compile(DAGRealTime dag)
 
 void SchedGrid::draw() const
 {
-	//_grid_rect.draw();
 	_x_axis.drawArrow(1, SizeF(5, 5), Palette::Black);
 	_y_axis.drawArrow(1, SizeF(5, 5), Palette::Black);
 

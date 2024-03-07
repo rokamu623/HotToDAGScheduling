@@ -5,6 +5,9 @@
 class DAG;
 class DAGRealTime;
 
+
+// スケジューリングの1コア1時間単位の枠
+// グリッドの1マス
 class Cell
 {
 private:
@@ -21,7 +24,9 @@ public:
 	Cell() {};
 	Cell(Point pos, Point offset);
 
+	// 不正な配置をされているか（同じ時刻、コアに2ノード以上配置されているか）
 	bool invalid();
+	// 配置されたとき・外れたときの処理
 	void assign(bool input);
 
 	void draw() const;
@@ -31,9 +36,12 @@ public:
 	Rect body() { return _body; };
 };
 
+
+// スケジューリング、グリッド
 class SchedGrid
 {
 private:
+	// Cell クラスの2次元配列
 	Grid<Cell> _cells;
 	Rect _field;
 	Rect _grid_rect;
@@ -48,7 +56,9 @@ public:
 	SchedGrid();
 	SchedGrid(int core_num, int time_limit);
 
+	// コンパイル（結果計算）
 	CompileLog compile(DAG dag);
+	// コンパイル（結果計算）
 	CompileLog compile(DAGRealTime dag);
 
 	void draw() const;
