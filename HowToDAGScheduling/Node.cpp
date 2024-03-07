@@ -87,7 +87,6 @@ void NodeBase::fit(SchedGrid& grid)
 		for (auto& cell : grid.cells())
 			if (_sched_body.leftCenter().intersects(cell.body()))
 			{
-				Print << cell.time();
 				_start_time = cell.time();
 				_core = cell.core();
 			}
