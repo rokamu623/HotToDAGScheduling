@@ -12,8 +12,10 @@ HowToDAGScheduling/stdafx.cpp
 HowToDAGScheduling/stdafx.h
 
 HowToDAGScheduling/App/AS_DEBUG/
+HowToDAGScheduling/App/dll/
 HowToDAGScheduling/App/engine/
 HowToDAGScheduling/App/example/
+HowToDAGScheduling/App/HowToDAGScheduling.exe
 HowToDAGScheduling/App/HowToDAGScheduling(debug).exe
 HowToDAGScheduling/App/BGM/
 HowToDAGScheduling/App/DAG/
