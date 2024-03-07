@@ -15,15 +15,20 @@ public:
 	void update();
 	void draw() const;
 
-	bool finish() { return (_color.a - 2 < 1); };
+	// エフェクト完了判定
+	bool finish();
 };
 
+
+// 成功時（Success）のエフェクト
 class SuccessEffect : public CompileEffect
 {
 public:
 	SuccessEffect();
 };
 
+
+// 失敗時（Failure）のエフェクト
 class FailureEffect : public CompileEffect
 {
 public:

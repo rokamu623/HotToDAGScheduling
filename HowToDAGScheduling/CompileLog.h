@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+// 結果計算（コンパイル評価）のデータ
 class CompileLog
 {
 public:

@@ -97,6 +97,11 @@ void Compiler::compile(DAGRealTime& dag, SchedGrid& grid, FilePath path)
 	}
 }
 
+void Compiler::draw_field() const
+{
+	_console_field.draw(LAYOUT::FIELD_COLOR);
+}
+
 void Compiler::update()
 {
 	// エフェクトがあるならそれを更新

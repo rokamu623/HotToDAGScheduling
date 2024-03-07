@@ -6,6 +6,7 @@
 #include "CompileEffect.h"
 #include "DAGJsonPackage.h"
 
+// DAG とプロセッサ（Grid）から結果計算（コンパイル評価）を求め、保存・エフェクト発生させる
 class Compiler
 {
 private:
@@ -23,8 +24,10 @@ public:
 	// コンパイル（結果計算）、リアルタイムモード向け
 	void compile(DAGRealTime& dag, SchedGrid& grid, FilePath path);
 
-	void draw_field() const { _console_field.draw(LAYOUT::FIELD_COLOR); };
+	// 文字の下の台を描画
+	void draw_field() const;
 	void update();
+	// 文字を描画
 	void draw() const;
 };
 
