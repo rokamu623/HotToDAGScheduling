@@ -12,6 +12,8 @@ void DAGBase::draw_field() const
 DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
 {
 	_nodes = nodes;
+	// WCET 小さい順にソート（小さいノードがドラッグ優先される）
+	_nodes.sort_by([](Node a, Node b) { return a.wcet() < b.wcet(); });
 	// DAG 表示の基準の値
 	_pos = LAYOUT::MERGIN + Point(0, LAYOUT::STAZE_SPACE_HEIGHT);
 
@@ -29,13 +31,14 @@ DAG::DAG(Array<Node> nodes, Array<Array<int>> edges)
 	// エッジをノードに反映させる
 	for (auto& edge : edges)
 	{
-		if (edge.size() == 2)
-			for (auto& pre : _nodes)
-				if (edge[0] == pre.idx())
-					for (auto& suc : _nodes)
-						if (edge[1] == suc.idx())
-							suc.append_pre(pre);
+		if (edge.size() != 2)
+			continue;
 
+		for (auto& pre : _nodes)
+			if (edge[0] == pre.idx())
+				for (auto& suc : _nodes)
+					if (edge[1] == suc.idx())
+						suc.append_pre(pre);
 	}
 }
 
@@ -86,7 +89,7 @@ void DAG::update()
 
 void DAG::draw() const
 {
-	for (auto& node : _nodes)
+	for (auto& node : _nodes.reversed())
 	{
 		node.draw_graph(_pos + LAYOUT::MERGIN);
 		node.draw_sched();
@@ -97,6 +100,8 @@ void DAG::draw() const
 DAGRealTime::DAGRealTime(Array<NodeRealTime> nodes, Array<Array<int>> edges)
 {
 	_nodes = nodes;
+	// WCET 小さい順にソート（小さいノードがドラッグ優先される）
+	_nodes.sort_by([](NodeRealTime a, NodeRealTime b) { return a.wcet() < b.wcet(); });
 	// DAG 表示の基準の値
 	_pos = LAYOUT::MERGIN + Point(0, LAYOUT::STAZE_SPACE_HEIGHT);
 
@@ -113,15 +118,14 @@ DAGRealTime::DAGRealTime(Array<NodeRealTime> nodes, Array<Array<int>> edges)
 
 	for (auto& edge : edges)
 	{
-		if (edge.size() == 2)
-		{
-			for (auto& suc : _nodes)
-				if (edge[1] == suc.idx())
-					for (auto& pre : _nodes)
-						if (edge[0] == pre.idx())
-							suc.append_pre(pre);
-		}
+		if (edge.size() != 2)
+			continue;
 
+		for (auto& suc : _nodes)
+			if (edge[1] == suc.idx())
+				for (auto& pre : _nodes)
+					if (edge[0] == pre.idx())
+						suc.append_pre(pre);
 	}
 
 	// 最初のノードを可視化する（前任がないのでnode.real_time_ready()を呼び出すと可視化される）
@@ -178,9 +182,8 @@ void DAGRealTime::update()
 
 void DAGRealTime::draw() const
 {
-	for (auto& node : _nodes)
+	for (auto& node : _nodes.reversed())
 	{
-		ClearPrint();
 		node.draw_graph(_pos + LAYOUT::MERGIN);
 		node.draw_sched();
 	}

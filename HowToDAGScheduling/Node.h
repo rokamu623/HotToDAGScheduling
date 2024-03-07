@@ -49,6 +49,7 @@ public:
 	int idx() { return _idx; };
 	int finish_time() { return _start_time + _wcet; };
 	int start_time() { return _start_time; };
+	int wcet() { return _wcet; };
 	int core() { return _core; };
 	Point graph_pos() { return _graph_pos; };
 	Rect sched_body() { return _sched_body; };
