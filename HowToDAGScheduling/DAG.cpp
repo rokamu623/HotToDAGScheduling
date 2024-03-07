@@ -97,7 +97,7 @@ CompileLog NodeBase::compile()
 
 	for (auto& p : _pre)
 		// 前任者の終了時間より早く開始しようとしたらエラーログを保存
-		if (p.get().start_time() + p.get().wcet() > _start_time)
+		if (p.get().finish_time() > _start_time)
 		{
 			log.message.append(U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx()) + U"\n");
 			log.success = false;
