@@ -3,6 +3,6 @@
 
 CompileLog::CompileLog(bool success, String message)
 {
-	_success = success;
-	_message = message;
+	this->success = success;
+	this->message = message;
 }

@@ -86,8 +86,8 @@ CompileLog NodeBase::compile()
 	for (auto& p : _pre)
 		if (p.get().time() + p.get().wcet() > _time)
 		{
-			log._message.append(U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx()) + U"\n");
-			log._success = false;
+			log.message.append(U"Node " + Format(_idx) + U": Cannot start earlier than Node " + Format(p.get().idx()) + U"\n");
+			log.success = false;
 		}
 
 	return log;
@@ -222,10 +222,10 @@ CompileLog DAGRealTime::compile(SchedGrid& grid)
 	for (auto& node : _nodes)
 	{
 		CompileLog node_log = node.compile();
-		if (node_log._success != true)
+		if (node_log.success != true)
 		{
-			log._message.append(node_log._message);
-			log._success = false;
+			log.message.append(node_log.message);
+			log.success = false;
 		}
 	}
 
@@ -297,10 +297,10 @@ CompileLog DAG::compile(SchedGrid& grid)
 	for (auto& node : _nodes)
 	{
 		CompileLog node_log = node.compile();
-		if (node_log._success != true)
+		if (node_log.success != true)
 		{
-			log._message.append(node_log._message);
-			log._success = false;
+			log.message.append(node_log.message);
+			log.success = false;
 		}
 	}
 

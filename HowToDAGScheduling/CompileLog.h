@@ -2,8 +2,8 @@
 class CompileLog
 {
 public:
-	bool _success;
-	String _message;
+	bool success;
+	String message;
 
 	CompileLog() {};
 	CompileLog(bool success, String message);

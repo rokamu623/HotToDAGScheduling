@@ -77,8 +77,8 @@ CompileLog SchedGrid::compile(DAG dag)
 	for (auto& cell : _cells)
 		if (cell.invalid())
 		{
-			log._success = false;
-			log._message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
+			log.success = false;
+			log.message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
 		}
 
 	return log;
@@ -99,8 +99,8 @@ CompileLog SchedGrid::compile(DAGRealTime dag)
 	for (auto& cell : _cells)
 		if (cell.invalid())
 		{
-			log._success = false;
-			log._message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
+			log.success = false;
+			log.message.append(U"Core " + Format(cell.core()) + U", time " + Format(cell.time()) + U": Each core has one job at same time\n");
 		}
 
 	return log;
