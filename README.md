@@ -22,9 +22,9 @@ https://user-images.githubusercontent.com/48247817/224533852-3484ba3c-b64d-4bb0-
 - download and unzip `HowToDAGScheduling.zip`
 - run `HowToDAGScheduling.exe`
 
-### Download and add stage
-- download stage file (.json)
-- put stage file to `DAG` directory
+### Add stage
+- copy stage file (`DAG/sample_dag.json`)
+- rename and edit stage file
 
 ## Credit
 ### BGM
