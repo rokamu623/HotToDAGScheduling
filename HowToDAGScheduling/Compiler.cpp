@@ -26,8 +26,8 @@ void Compiler::compile(DAG& dag, SchedGrid& grid, FilePath path)
 		// 応答時間を計算（最も大きなノードの終了時間）
 		int response_time = 0;
 		for (auto& node : dag.nodes())
-			if (response_time < node.time() + node.wcet())
-				response_time = node.time() + node.wcet();
+			if (response_time < node.finish_time())
+				response_time = node.finish_time();
 		_message.append(U"Response Time: " + Format(response_time));
 
 		// DAG情報ファイルに書き込み
@@ -70,8 +70,8 @@ void Compiler::compile(DAGRealTime& dag, SchedGrid& grid, FilePath path)
 		// 応答時間を計算（最も大きなノードの終了時間）
 		int response_time = 0;
 		for (auto& node : dag.nodes())
-			if (response_time < node.time() + node.wcet())
-				response_time = node.time() + node.wcet();
+			if (response_time < node.finish_time())
+				response_time = node.finish_time();
 		_message.append(U"Response Time: " + Format(response_time));
 
 		// DAG情報ファイルに書き込み
